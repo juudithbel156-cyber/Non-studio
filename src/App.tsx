@@ -1,43 +1,50 @@
 import { useEffect } from 'react'
-import { MotionConfig } from 'framer-motion'
 import { I18nProvider } from './i18n/I18n'
+import { RouterProvider, useRouter } from './router'
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
+import { Cursor } from './components/Cursor'
 import { Hero } from './sections/Hero'
-import { Store } from './sections/Store'
-import { Team } from './sections/Team'
-import { Toys } from './sections/Toys'
-import { Brands } from './sections/Brands'
-import { News } from './sections/News'
-import { Services } from './sections/Services'
-import { Contact } from './sections/Contact'
+import { About } from './sections/About'
+import { Showcase } from './sections/Showcase'
+import { Featured } from './sections/Featured'
+import { Booking, Proof } from './sections/Booking'
+import { CategoryPage } from './pages/CategoryPage'
 import { initSmoothScroll, ScrollTrigger } from './hooks/smoothScroll'
 import { usePrefersReducedMotion } from './hooks/env'
+
+function Pages() {
+  const { route } = useRouter()
+  return (
+    <main>
+      {route.page === 'home' ? (
+        <>
+          <Hero />
+          <About />
+          <Showcase />
+          <Featured />
+          <Proof />
+          <Booking />
+        </>
+      ) : (
+        <CategoryPage id={route.id} />
+      )}
+    </main>
+  )
+}
 
 export default function App() {
   const reduced = usePrefersReducedMotion()
   useEffect(() => initSmoothScroll(reduced), [reduced])
-  useEffect(() => {
-    document.fonts?.ready.then(() => ScrollTrigger.refresh())
-  }, [])
-
+  useEffect(() => { document.fonts?.ready.then(() => ScrollTrigger.refresh()) }, [])
   return (
     <I18nProvider>
-      <MotionConfig reducedMotion="user">
-        <a href="#tienda" className="sr-only z-[100] rounded-full bg-amarillo px-4 py-2 font-bold focus:not-sr-only focus:fixed focus:left-4 focus:top-4">Saltar al contenido</a>
+      <RouterProvider>
         <Header />
-        <main>
-          <Hero />
-          <Store />
-          <Team />
-          <Toys />
-          <Brands />
-          <News />
-          <Services />
-          <Contact />
-        </main>
+        <Pages />
         <Footer />
-      </MotionConfig>
+        <Cursor />
+      </RouterProvider>
     </I18nProvider>
   )
 }

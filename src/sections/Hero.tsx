@@ -1,103 +1,62 @@
-import { lazy, Suspense, useEffect, useLayoutEffect, useRef } from 'react'
+import { lazy, Suspense, useEffect, useRef } from 'react'
 import { useI18n } from '../i18n/I18n'
-import { site } from '../config/site'
-import { gsap, ScrollTrigger, scrollToTarget } from '../hooks/smoothScroll'
+import { useRouter } from '../router'
+import { contact } from '../content/site'
+import { Letters } from '../components/ui'
+import { gsap } from '../hooks/smoothScroll'
 import { hasWebGL, useInView, useIsMobile, usePrefersReducedMotion } from '../hooks/env'
-import { HeroFallback } from './HeroFallback'
+import { IMG } from '../assets/images'
 
 const HeroScene = lazy(() => import('../three/HeroScene'))
 
 export function Hero() {
   const { t } = useI18n()
-  const wrap = useRef<HTMLElement>(null)
-  const copy = useRef<HTMLDivElement>(null)
-  const veil = useRef<HTMLDivElement>(null)
-  const cue = useRef<HTMLDivElement>(null)
-  const progress = useRef(0)
-  const reduced = usePrefersReducedMotion()
+  const { go } = useRouter()
+  const root = useRef<HTMLElement>(null)
+  const stage = useRef<HTMLDivElement>(null)
+  const zoom = useRef(0)
   const mobile = useIsMobile()
+  const reduced = usePrefersReducedMotion()
+  const visible = useInView(root, '0px')
   const webgl = hasWebGL()
-  const visible = useInView(wrap, '0px')
 
-  // Entrada inicial: el título aparece desde la profundidad
-  useLayoutEffect(() => {
-    if (reduced || !copy.current) return
-    const ctx = gsap.context(() => {
-      gsap.from('[data-hero-in]', { opacity: 0, y: 50, scale: 0.92, filter: 'blur(10px)', duration: 1.3, ease: 'expo.out', stagger: 0.12, delay: 0.25 })
-    }, copy)
-    return () => ctx.revert()
-  }, [reduced])
-
-  // Scroll: la cámara 3D recorre la escena y el texto se aleja
   useEffect(() => {
-    if (reduced || !wrap.current) return
+    if (reduced) return
     const ctx = gsap.context(() => {
-      const st = ScrollTrigger.create({
-        trigger: wrap.current,
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: true,
-        onUpdate: (s) => { progress.current = s.progress },
-      })
-      const tl = gsap.timeline({ scrollTrigger: { trigger: wrap.current, start: 'top top', end: 'bottom bottom', scrub: 0.6 } })
-      tl.to(copy.current, { opacity: 0, y: -80, scale: 0.86, ease: 'power2.in', duration: 0.35 }, 0)
-        .to(cue.current, { opacity: 0, duration: 0.1 }, 0)
-        .to(veil.current, { opacity: 1, ease: 'power1.in', duration: 0.2 }, 0.8)
-      return () => st.kill()
-    }, wrap)
+      const tl = gsap.timeline({ delay: 0.2 })
+      tl.fromTo(stage.current, { clipPath: 'inset(14% 18% 14% 18% round 24px)' }, { clipPath: 'inset(0% 0% 0% 0% round 0px)', duration: 2, ease: 'expo.inOut' })
+        .from('[data-letter]', { yPercent: 110, duration: 1.3, stagger: 0.025, ease: 'expo.out' }, 1.0)
+        .from('[data-hero-fade]', { y: 24, opacity: 0, duration: 1.1, stagger: 0.1, ease: 'expo.out' }, 1.6)
+      // scroll: zoom cinematográfico de la cámara y salida del texto
+      gsap.to(zoom, { current: 1, ease: 'none', scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: true } })
+      gsap.to('[data-hero-copy]', { yPercent: -30, opacity: 0, ease: 'none', scrollTrigger: { trigger: root.current, start: 'top top', end: '70% top', scrub: true } })
+    }, root)
     return () => ctx.revert()
   }, [reduced])
 
   return (
-    <section id="inicio" ref={wrap} aria-labelledby="hero-title" className={`relative ${reduced ? 'h-[100svh]' : 'h-[260svh]'}`}>
-      <div className="sticky top-0 h-[100svh] overflow-hidden bg-noche">
+    <section id="inicio" ref={root} aria-labelledby="hero-title" className="relative h-[100svh] min-h-[620px] overflow-hidden">
+      <div ref={stage} className="grain absolute inset-0 overflow-hidden bg-[#EADFD1]">
         {webgl ? (
-          <Suspense fallback={<HeroFallback loading />}>
-            <HeroScene progress={progress} active={visible} mobile={mobile} reduced={reduced} />
+          <Suspense fallback={<img src={IMG.hero} alt="" className="h-full w-full object-cover" />}>
+            <HeroScene zoom={zoom} mobile={mobile} reduced={reduced} active={visible} />
           </Suspense>
         ) : (
-          <HeroFallback />
+          <img src={IMG.hero} alt="" className="h-full w-full object-cover object-right" />
         )}
-
-        {/* viñeta para legibilidad */}
-        <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(16,41,111,.55)_0%,rgba(16,41,111,0)_55%)]" />
-
-        <div ref={copy} className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center -translate-y-[11vh] px-4 text-center md:-translate-y-[6vh]">
-          <h1 id="hero-title" className="font-display font-extrabold leading-[0.86] text-white [text-shadow:0_10px_40px_rgba(6,20,63,.55)]">
-            <span data-hero-in className="relative inline-block text-[clamp(3.6rem,13vw,10.5rem)] tracking-[-0.02em]">
-              Juguettos
-              <svg viewBox="0 0 20 24" className="absolute -right-[0.32em] top-[0.02em] h-[0.42em] w-auto" aria-hidden>
-                <g stroke="#FFCC00" strokeWidth="3.4" strokeLinecap="round"><path d="M4 6l7-4" /><path d="M6 12h9" /><path d="M4 18l7 4" /></g>
-              </svg>
-            </span>
-            <span data-hero-in className="mt-1 block text-[clamp(1.9rem,6vw,4.6rem)] text-amarillo">Martorell</span>
-          </h1>
-          <p data-hero-in className="mt-6 max-w-[30ch] font-display text-[clamp(1.15rem,2.2vw,1.6rem)] font-semibold text-white/90">
-            {site.slogan}
-          </p>
-          <div data-hero-in className="pointer-events-auto mt-8 flex flex-wrap items-center justify-center gap-3">
-            <a href="#tienda" onClick={(e) => { e.preventDefault(); scrollToTarget('#tienda') }} className="btn btn-sol text-lg">
-              {t.hero.cta}
-            </a>
-          </div>
-          {webgl && <p data-hero-in className="mt-5 text-sm font-semibold text-white/60">{t.hero.hint}</p>}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#EADFD1]/70 via-[#EADFD1]/10 to-transparent max-md:bg-gradient-to-b max-md:from-[#EADFD1]/80 max-md:via-[#EADFD1]/30" />
+      </div>
+      <div data-hero-copy className="gutter wrap pointer-events-none relative flex h-full flex-col justify-start pt-[18svh] md:justify-center md:pt-0">
+        <h1 id="hero-title" className="display max-w-[11ch] text-chocolate"><Letters text={t.hero.title} /></h1>
+        <p data-hero-fade className="mt-8 max-w-[30ch] text-[18px] text-cacao md:text-[20px]">{t.hero.sub}</p>
+        <div data-hero-fade className="pointer-events-auto mt-10 flex flex-wrap gap-3">
+          <a href={`tel:${contact.tel}`} data-magnetic className="btn btn-dark">{t.cta.book}</a>
+          <button onClick={(e) => go({ page: 'home', anchor: 'tratamientos' }, e)} data-magnetic className="btn btn-line">{t.cta.discover}</button>
         </div>
-
-        <div ref={cue} className="absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-white/80">
-          <button
-            onClick={() => scrollToTarget(window.innerHeight * 1.2)}
-            className="flex flex-col items-center gap-2 rounded-xl px-3 py-1"
-            aria-label={t.hero.scroll}
-          >
-            <span className="relative block h-10 w-6 rounded-full border-2 border-white/70">
-              <span className="animate-rueda absolute left-1/2 top-2 h-2 w-1 -translate-x-1/2 rounded-full bg-amarillo" />
-            </span>
-            <span className="text-xs font-bold">{t.hero.scroll}</span>
-          </button>
-        </div>
-
-        {/* velo de transición hacia la siguiente sección */}
-        <div ref={veil} aria-hidden className="pointer-events-none absolute inset-0 bg-[#D6E4FF] opacity-0" />
+      </div>
+      <div data-hero-fade className="gutter wrap pointer-events-none absolute inset-x-0 bottom-8 flex items-end justify-between text-[13px] text-cacao">
+        <span>Martorell · Barcelona</span>
+        <span className="flex items-center gap-3">{t.hero.scroll}<span className="relative block h-10 w-px overflow-hidden bg-chocolate/20"><span className="absolute inset-x-0 top-0 h-1/2 animate-[pulse_2s_ease-in-out_infinite] bg-chocolate" /></span></span>
       </div>
     </section>
   )

@@ -1,2 +1,0 @@
-Fotografías del equipo. Añade aquí las fotos (p. ej. nombre-apellido.webp, formato vertical 4:5)
-y completa src/content/team.ts.

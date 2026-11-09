@@ -1,36 +1,20 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { dict, type Dict, type Lang } from './dict'
-import type { L } from '../content/types'
+import type { L } from '../content/site'
 
 type Ctx = { lang: Lang; t: Dict; l: (v: L) => string; setLang: (l: Lang) => void }
-const I18nCtx = createContext<Ctx | null>(null)
-
-function initialLang(): Lang {
-  const q = new URLSearchParams(window.location.search).get('lang')
-  if (q === 'ca' || q === 'es') return q
-  try {
-    const s = localStorage.getItem('lang')
-    if (s === 'ca' || s === 'es') return s
-  } catch { /* sin almacenamiento */ }
-  return 'es'
-}
+const C = createContext<Ctx | null>(null)
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>(initialLang)
+  const [lang, setLang] = useState<Lang>(() => {
+    try { const s = localStorage.getItem('hebe-lang'); if (s === 'ca' || s === 'es') return s } catch { /* sin almacenamiento */ }
+    return 'es'
+  })
   useEffect(() => {
     document.documentElement.lang = lang
-    try { localStorage.setItem('lang', lang) } catch { /* nada */ }
+    try { localStorage.setItem('hebe-lang', lang) } catch { /* nada */ }
   }, [lang])
-  const value = useMemo<Ctx>(() => ({
-    lang, setLang,
-    t: dict[lang] as Dict,
-    l: (v: L) => (lang === 'ca' && v.ca ? v.ca : v.es),
-  }), [lang])
-  return <I18nCtx.Provider value={value}>{children}</I18nCtx.Provider>
+  const v = useMemo<Ctx>(() => ({ lang, setLang, t: dict[lang] as Dict, l: (x: L) => x[lang] }), [lang])
+  return <C.Provider value={v}>{children}</C.Provider>
 }
-
-export function useI18n() {
-  const c = useContext(I18nCtx)
-  if (!c) throw new Error('useI18n fuera de I18nProvider')
-  return c
-}
+export const useI18n = () => { const c = useContext(C); if (!c) throw new Error('I18n'); return c }
