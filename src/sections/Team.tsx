@@ -58,7 +58,7 @@ function Card({ m, i }: { m: TeamMember; i: number }) {
           <div className="relative bg-white p-3.5 sm:p-5" style={{ transform: 'translateZ(40px)' }}>
             <h3 className="text-lg font-extrabold leading-tight text-azul sm:text-2xl">{m.name}</h3>
             <p className="font-display text-sm font-bold text-rojo sm:text-base">{l(m.role)}</p>
-            <p className="mt-2 hidden text-[.95rem] leading-relaxed text-gris sm:block">{l(m.bio)}</p>
+            <p className="mt-2 text-[.85rem] leading-snug text-gris sm:text-[.95rem] sm:leading-relaxed">{l(m.bio)}</p>
           </div>
         </button>
       </TiltCard>

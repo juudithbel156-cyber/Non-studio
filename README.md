@@ -54,7 +54,7 @@ Nada de esto se ha inventado: todo está identificado como provisional.
 1. **Logotipo oficial** → copia el archivo en `public/brand/` y pon su ruta en `site.brand.logoSrc`.
 2. **Colores exactos de marca** → tokens en `src/index.css` (`--color-azul`, `--color-rojo`, `--color-amarillo`).
 3. **Fotos de la tienda** → `public/images/tienda/` + rutas en `src/content/store.ts`.
-4. **Equipo** → las 5 fotos ya están; faltan nombres, puestos y textos en `src/content/team.ts` (pon `placeholder: false`).
+4. **Equipo** → fotos, nombres y puestos listos; faltan las biografías de Alba, Nayara y Judith en `src/content/team.ts`.
 5. **Horario** → `site.hours` en `src/config/site.ts`.
 6. **Redes sociales** → URLs en `site.social` (las vacías no se muestran).
 7. **Marcas** → `src/content/brands.ts`; marca `verified: true` solo tras confirmar que la tienda las trabaja. Puedes añadir `logo` y `url`.
