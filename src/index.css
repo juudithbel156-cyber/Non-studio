@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+/*
+ * TOKENS DE MARCA
+ * Los valores de azul, rojo y amarillo son aproximaciones a la identidad de Juguettos.
+ * PENDIENTE: sustituir por los valores exactos del manual de marca oficial.
+ */
+@theme {
+  --color-azul: #1B3D9A;
+  --color-azul-claro: #2F5BD3;
+  --color-noche: #10296F;
+  --color-rojo: #E52421;
+  --color-amarillo: #FFCC00;
+  --color-nube: #EEF2FF;
+  --color-tinta: #17204A;
+  --color-gris: #5A6488;
+
+  --font-display: "Baloo 2", "Nunito", ui-rounded, system-ui, sans-serif;
+  --font-sans: "Nunito", ui-rounded, system-ui, sans-serif;
+
+  --ease-juego: cubic-bezier(.2, .9, .25, 1.15);
+}
+
+@layer base {
+  html { -webkit-text-size-adjust: 100%; }
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  .lenis.lenis-stopped { overflow: hidden; }
+
+  body {
+    @apply bg-white font-sans text-tinta antialiased;
+    font-feature-settings: "kern";
+  }
+  h1, h2, h3, h4 { @apply font-display; letter-spacing: -0.01em; }
+  ::selection { background: var(--color-amarillo); color: var(--color-tinta); }
+
+  :focus-visible {
+    outline: 3px solid var(--color-amarillo);
+    outline-offset: 3px;
+    border-radius: 10px;
+  }
+}
+
+@layer components {
+  .container-j { @apply mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-10; }
+
+  .btn {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 font-display text-[1.05rem] font-bold leading-none transition-[transform,box-shadow,background-color] duration-300 active:scale-[.97];
+    transition-timing-function: var(--ease-juego);
+  }
+  .btn-sol { @apply bg-amarillo text-tinta shadow-[0_6px_0_#C99A00,0_14px_30px_-8px_rgba(255,204,0,.55)] hover:-translate-y-0.5 hover:shadow-[0_8px_0_#C99A00,0_18px_36px_-8px_rgba(255,204,0,.6)]; }
+  .btn-azul { @apply bg-azul text-white shadow-[0_6px_0_#0E2566] hover:-translate-y-0.5 hover:bg-azul-claro; }
+  .btn-claro { @apply bg-white text-azul ring-2 ring-azul/15 hover:ring-azul/40; }
+
+  /* Hueco provisional: siempre visible y fácil de localizar */
+  .pendiente {
+    @apply inline-flex items-center gap-1.5 rounded-full bg-amarillo/90 px-2.5 py-1 text-[.72rem] font-extrabold text-tinta;
+  }
+  .slot {
+    background:
+      repeating-linear-gradient(135deg, rgb(27 61 154 / .06) 0 12px, transparent 12px 24px),
+      linear-gradient(160deg, #F4F6FF, #E3E9FF);
+    @apply border-2 border-dashed border-azul/25;
+  }
+
+  .h-section { @apply font-display text-[clamp(2rem,4.6vw,3.6rem)] font-extrabold leading-[1.02]; }
+  .lead { @apply max-w-[58ch] text-[1.075rem] leading-relaxed text-gris; }
+}
+
+@keyframes rueda {
+  0% { transform: translateY(0); opacity: 1 }
+  70% { transform: translateY(10px); opacity: 0 }
+  100% { transform: translateY(0); opacity: 0 }
+}
+.animate-rueda { animation: rueda 1.8s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+}

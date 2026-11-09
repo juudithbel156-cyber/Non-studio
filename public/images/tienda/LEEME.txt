@@ -1,0 +1,2 @@
+Fotografías reales de la tienda. Añade los archivos aquí (p. ej. fachada.webp, interior-1.webp)
+y referencia sus rutas en src/content/store.ts. Recomendado: WebP, 1600px de ancho máx.

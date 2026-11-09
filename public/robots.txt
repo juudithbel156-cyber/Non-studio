@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# PENDIENTE: sustituir por el dominio definitivo
+Sitemap: https://www.juguettosmartorell.es/sitemap.xml
