@@ -33,7 +33,7 @@ export const team: TeamMember[] = [
   {
     name: 'Sonia Carrera',
     role: { es: 'Segunda encargada', ca: 'Segona encarregada' },
-    bio: { es: '¿Que no encontramos algo? Sonia. ¿Que no sabemos qué hacer? Sonia. Es la madre de la tienda y tiene solución para todo (o casi).', ca: 'Que no trobem alguna cosa? La Sonia. Que no sabem què fer? La Sonia. És la mare de la botiga i té solució per a tot (o gairebé).' },
+    bio: { es: '¿Que no encontramos algo? Sonia. ¿Que no sabemos montar un coche? Sonia. Es la madre de la tienda y tiene solución para todo (o casi).', ca: 'Que no trobem alguna cosa? La Sonia. Que no sabem muntar un cotxe? La Sonia. És la mare de la botiga i té solució per a tot (o gairebé).' },
     more: { es: 'Tiene línea directa con la solución de cualquier problema. Si no lo sabe ella, no lo sabe nadie.', ca: 'Té línia directa amb la solució de qualsevol problema. Si no ho sap ella, no ho sap ningú.' },
     photo: '/images/equipo/persona-3.webp',
     placeholder: false,
