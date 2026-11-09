@@ -36,10 +36,10 @@ function Card({ m, i }: { m: TeamMember; i: number }) {
           type="button"
           onClick={() => setOpen((o) => !o)}
           aria-expanded={open}
-          className="relative block h-full w-full overflow-hidden rounded-[28px] bg-white text-left shadow-[0_30px_60px_-30px_rgba(0,0,0,.6)] transition-shadow duration-500 group-hover:shadow-[0_50px_80px_-30px_rgba(0,0,0,.75)]"
+          className="relative flex h-full w-full flex-col justify-start overflow-hidden rounded-[28px] bg-white text-left shadow-[0_30px_60px_-30px_rgba(0,0,0,.6)] transition-shadow duration-500 group-hover:shadow-[0_50px_80px_-30px_rgba(0,0,0,.75)]"
           style={{ transformStyle: 'preserve-3d' }}
         >
-          <div className="relative aspect-[4/5] overflow-hidden">
+          <div className="relative aspect-[4/5] w-full shrink-0 overflow-hidden">
             <div className="h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.07]">
             <motion.div
               className="h-full w-full"
@@ -57,7 +57,7 @@ function Card({ m, i }: { m: TeamMember; i: number }) {
               <p className="leading-relaxed">{l(m.more)}</p>
             </div>
           </div>
-          <div className="relative bg-white p-3.5 sm:p-5" style={{ transform: 'translateZ(40px)' }}>
+          <div className="relative w-full flex-1 bg-white p-3.5 sm:p-5" style={{ transform: 'translateZ(40px)' }}>
             <h3 className="text-lg font-extrabold leading-tight text-azul sm:text-2xl">{m.name}</h3>
             <p className="font-display text-sm font-bold text-rojo sm:text-base">{l(m.role)}</p>
             <p className="mt-2 text-[.85rem] leading-snug text-gris sm:text-[.95rem] sm:leading-relaxed">{l(m.bio)}</p>

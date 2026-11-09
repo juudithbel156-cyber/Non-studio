@@ -31,7 +31,7 @@ function CategoryCard({ c, i, onOpen }: { c: Category; i: number; onOpen: () => 
           type="button"
           onClick={onOpen}
           aria-label={`${t.toys.open}: ${l(c.title)}`}
-          className="relative block h-full w-full rounded-[28px] text-left"
+          className="relative flex h-full w-full flex-col justify-start rounded-[28px] text-left"
           style={{ transformStyle: 'preserve-3d' }}
         >
           <motion.div
