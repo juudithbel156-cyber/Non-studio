@@ -1,9 +1,4 @@
-// Imágenes editoriales PROVISIONALES (bodegones 3D renderizados).
-// PENDIENTE: sustituir cada archivo por fotografía real del centro manteniendo el nombre.
-import hero from './hero.webp'
-import about from './about.webp'
-import facial from './facial.webp'
-import corporal from './corporal.webp'
-import bienestar from './bienestar.webp'
-import crio from './crio.webp'
-export const IMG: Record<string, string> = { hero, about, facial, corporal, bienestar, crio }
+// Fotografías reales de hebebyclau.cat. Las *-cut son recortes sin fondo.
+const m = import.meta.glob('./foto/*.webp', { eager: true, import: 'default' }) as Record<string, string>
+export const IMG: Record<string, string> = Object.fromEntries(Object.entries(m).map(([k, v]) => [k.replace('./foto/', '').replace('.webp', ''), v]))
+export { default as LOGO } from './logo-original.png'

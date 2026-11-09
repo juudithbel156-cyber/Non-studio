@@ -5,10 +5,11 @@ import { Header } from './components/Header'
 import { Footer } from './components/Footer'
 import { Cursor } from './components/Cursor'
 import { Hero } from './sections/Hero'
-import { About } from './sections/About'
-import { Showcase } from './sections/Showcase'
-import { Featured } from './sections/Featured'
-import { Booking, Proof } from './sections/Booking'
+import { Treatments } from './sections/Treatments'
+import { Manifesto } from './sections/Manifesto'
+import { Results } from './sections/Results'
+import { Team } from './sections/Team'
+import { Center } from './sections/Center'
 import { CategoryPage } from './pages/CategoryPage'
 import { initSmoothScroll, ScrollTrigger } from './hooks/smoothScroll'
 import { usePrefersReducedMotion } from './hooks/env'
@@ -20,11 +21,11 @@ function Pages() {
       {route.page === 'home' ? (
         <>
           <Hero />
-          <About />
-          <Showcase />
-          <Featured />
-          <Proof />
-          <Booking />
+          <Treatments />
+          <Manifesto />
+          <Results />
+          <Team />
+          <Center />
         </>
       ) : (
         <CategoryPage id={route.id} />

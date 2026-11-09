@@ -1,88 +1,102 @@
 import { useEffect, useRef, useState } from 'react'
 import { useI18n } from '../i18n/I18n'
 import { useRouter } from '../router'
-import { Wordmark } from './ui'
-import { contact } from '../content/site'
+import { Logo, Pill } from './ui'
+import { categories, contact } from '../content/site'
 import { gsap, stopScroll } from '../hooks/smoothScroll'
 
 export function Header() {
   const { t, lang, setLang } = useI18n()
   const { go, route } = useRouter()
   const [open, setOpen] = useState(false)
-  const [hidden, setHidden] = useState(false)
-  const [solid, setSolid] = useState(false)
+  const [compact, setCompact] = useState(false)
   const panel = useRef<HTMLDivElement>(null)
-  const last = useRef(0)
+  const tone = route.page === 'cat' ? categories.find((c) => c.id === route.id)?.tone : undefined
+  const onColor = !!tone && tone !== 'melocoton'
 
   useEffect(() => {
-    const on = () => {
-      const y = scrollY
-      setSolid(y > 60)
-      setHidden(y > 300 && y > last.current + 4)
-      if (y < last.current - 4) setHidden(false)
-      last.current = y
-    }
+    const on = () => setCompact(scrollY > 80)
     on(); addEventListener('scroll', on, { passive: true })
     return () => removeEventListener('scroll', on)
   }, [])
 
   useEffect(() => {
     stopScroll(open)
-    if (!panel.current) return
+    const el = panel.current
+    if (!el) return
     if (open) {
-      gsap.set(panel.current, { display: 'flex' })
-      gsap.fromTo(panel.current, { clipPath: 'inset(0% 0% 100% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.8, ease: 'expo.inOut' })
-      gsap.fromTo(panel.current.querySelectorAll('[data-item]'), { yPercent: 110 }, { yPercent: 0, duration: 1, stagger: 0.06, ease: 'expo.out', delay: 0.35 })
+      gsap.set(el, { display: 'flex' })
+      gsap.fromTo(el, { clipPath: 'circle(0% at 100% 0%)' }, { clipPath: 'circle(150% at 100% 0%)', duration: 0.9, ease: 'expo.inOut' })
+      gsap.fromTo(el.querySelectorAll('[data-item]'), { yPercent: 120, rotate: 4 }, { yPercent: 0, rotate: 0, duration: 1, stagger: 0.05, ease: 'expo.out', delay: 0.3 })
     } else {
-      gsap.to(panel.current, { clipPath: 'inset(0% 0% 100% 0%)', duration: 0.6, ease: 'expo.inOut', onComplete: () => { if (panel.current) panel.current.style.display = 'none' } })
+      gsap.to(el, { clipPath: 'circle(0% at 100% 0%)', duration: 0.6, ease: 'expo.inOut', onComplete: () => { el.style.display = 'none' } })
     }
   }, [open])
 
   const items = [
     { label: t.nav.treatments, anchor: 'tratamientos' },
-    { label: t.nav.about, anchor: 'sobre' },
-    { label: t.nav.featured, anchor: 'destacados' },
-    { label: t.nav.contact, anchor: 'reserva' },
+    { label: t.nav.results, anchor: 'resultados' },
+    { label: t.nav.team, anchor: 'equipo' },
+    { label: t.nav.center, anchor: 'centro' },
   ]
-  const nav = (anchor: string, e?: React.MouseEvent) => { setOpen(false); go({ page: 'home', anchor }, e, route.page === 'home' ? undefined : t.nav.home) }
+  const nav = (anchor: string, e?: React.MouseEvent) => { setOpen(false); go({ page: 'home', anchor }, e, route.page === 'home' ? undefined : 'Hêbê') }
 
   return (
     <>
-      <header className={`fixed inset-x-0 top-0 z-50 transition-[transform,background-color,backdrop-filter] duration-700 ease-[var(--ease-lujo)] ${hidden && !open ? '-translate-y-full' : ''} ${solid ? 'bg-crema/75 backdrop-blur-xl' : ''}`} style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}>
-        <div className="gutter wrap flex h-[76px] items-center justify-between gap-6">
-          <a href="#inicio" onClick={(e) => { e.preventDefault(); setOpen(false); go({ page: 'home' }, e, 'Hêbê') }} aria-label="Hêbê by Clau, inicio">
-            <Wordmark />
-          </a>
-          <nav aria-label="Principal" className="hidden lg:block">
-            <ul className="flex gap-9 text-[15px]">
-              {items.map((i) => (
-                <li key={i.anchor}><a href={`#inicio`} onClick={(e) => { e.preventDefault(); nav(i.anchor, e) }} className="relative py-2 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-right after:scale-x-0 after:bg-chocolate after:transition-transform after:duration-500 hover:after:origin-left hover:after:scale-x-100">{i.label}</a></li>
+      <header className="pointer-events-none fixed inset-x-0 top-0 z-50" style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}>
+        <div className={`gutter wrap grid grid-cols-[1fr_auto_1fr] items-start pt-5 transition-[padding] duration-500 ${compact ? 'md:pt-4' : 'md:pt-7'}`}>
+          {/* navegación en columna */}
+          <nav aria-label="Principal" className="pointer-events-auto hidden md:block">
+            <ul className={`flex flex-col gap-0.5 text-[13px] transition-opacity duration-500 ${compact || onColor ? 'pointer-events-none opacity-0' : ''}`}>
+              {items.map((i, k) => (
+                <li key={i.anchor}>
+                  <a href="#inicio" onClick={(e) => { e.preventDefault(); nav(i.anchor, e) }} className={`group inline-flex items-center gap-2 ${k === 0 ? 'text-naranja' : 'text-tinta/70 hover:text-tinta'}`}>
+                    {i.label}
+                    {k === 0 && <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-naranja" />}
+                  </a>
+                </li>
               ))}
             </ul>
+            <button onClick={() => setOpen(true)} className={`absolute top-4 inline-flex h-11 items-center gap-3 rounded-full bg-white/80 px-5 text-[14px] shadow-[0_8px_30px_-12px_rgba(29,42,36,.35)] backdrop-blur transition-[opacity,transform] duration-500 ${compact || onColor ? '' : 'pointer-events-none -translate-y-3 opacity-0'}`} aria-label={t.menu} aria-expanded={open}>
+              <span className="flex flex-col gap-1"><span className="h-px w-4 bg-tinta" /><span className="h-px w-4 bg-tinta" /></span>{t.menu}
+            </button>
           </nav>
-          <div className="flex items-center gap-3">
-            <div className="flex text-[13px]" role="group" aria-label="Idioma">
+
+          <a href="#inicio" onClick={(e) => { e.preventDefault(); setOpen(false); go({ page: 'home' }, e, 'Hêbê') }} className={`pointer-events-auto col-start-1 justify-self-start transition-opacity duration-500 md:col-start-2 md:justify-self-center ${compact ? 'md:opacity-0' : ''}`} aria-label="Inicio">
+            <Logo light={onColor} className="h-7 md:h-9" />
+          </a>
+
+          <div className="pointer-events-auto col-start-3 flex items-center justify-end gap-2">
+            <div className="flex rounded-full bg-white/80 p-1 text-[12px] backdrop-blur" role="group" aria-label="Idioma">
               {(['es', 'ca'] as const).map((l) => (
-                <button key={l} onClick={() => setLang(l)} aria-pressed={lang === l} className={`px-2 py-2 uppercase tracking-[0.06em] transition-opacity ${lang === l ? 'opacity-100' : 'opacity-40 hover:opacity-80'}`}>{l}</button>
+                <button key={l} onClick={() => setLang(l)} aria-pressed={lang === l} className={`rounded-full px-2.5 py-1.5 uppercase transition-colors ${lang === l ? 'bg-tinta text-white' : 'text-tinta/60 hover:text-tinta'}`}>{l}</button>
               ))}
             </div>
-            <a href={`tel:${contact.tel}`} data-magnetic className="btn btn-dark hidden h-11 px-6 text-[14px] sm:inline-flex">{t.cta.book}</a>
-            <button onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-label={open ? t.close : t.menu} className="relative flex h-11 w-11 flex-col items-center justify-center gap-[6px] lg:hidden">
-              <span className={`h-px w-6 bg-chocolate transition-transform duration-500 ${open ? 'translate-y-[3.5px] rotate-45' : ''}`} />
-              <span className={`h-px w-6 bg-chocolate transition-transform duration-500 ${open ? '-translate-y-[3.5px] -rotate-45' : ''}`} />
+            <Pill href={`tel:${contact.tel}`} tone={tone === 'naranja' ? 'tinta' : 'naranja'} className="!h-11 max-sm:hidden">{t.cta.bookShort}</Pill>
+            <button onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-label={open ? t.close : t.menu} className="grid h-11 w-11 place-items-center rounded-full bg-tinta text-white md:hidden">
+              <span className="flex flex-col gap-1"><span className="h-px w-4 bg-white" /><span className="h-px w-4 bg-white" /></span>
             </button>
           </div>
         </div>
       </header>
-      <div ref={panel} className="fixed inset-0 z-40 hidden flex-col justify-between bg-crema pb-10 pt-28" role="dialog" aria-modal="true" aria-label={t.menu}>
-        <ul className="gutter flex flex-col gap-2">
+
+      <div ref={panel} className="fixed inset-0 z-[60] hidden flex-col justify-between bg-naranja pb-10 pt-6 text-white" role="dialog" aria-modal="true" aria-label={t.menu}>
+        <div className="gutter flex items-center justify-between">
+          <Logo light className="h-8" />
+          <button onClick={() => setOpen(false)} className="grid h-11 w-11 place-items-center rounded-full bg-white text-naranja" aria-label={t.close}>
+            <svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2 2 12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
+          </button>
+        </div>
+        <ul className="gutter flex flex-col">
           {items.map((i) => (
-            <li key={i.anchor} className="overflow-hidden"><a data-item href="#inicio" onClick={(e) => { e.preventDefault(); nav(i.anchor, e) }} className="block font-serif text-[13vw] leading-[1.05]">{i.label}</a></li>
+            <li key={i.anchor} className="overflow-hidden">
+              <a data-item href="#inicio" onClick={(e) => { e.preventDefault(); nav(i.anchor, e) }} className="block font-display text-[clamp(2.6rem,9vw,7rem)] font-medium leading-[1.05] tracking-[-0.04em] hover:text-tinta">{i.label}</a>
+            </li>
           ))}
         </ul>
-        <div className="gutter flex flex-col gap-3">
-          <a href={`tel:${contact.tel}`} className="btn btn-dark">{t.cta.book} · {contact.phone}</a>
-          <p className="label">{contact.street}, {contact.city}</p>
+        <div className="gutter flex flex-wrap items-center gap-4 text-[15px]">
+          <Pill href={`tel:${contact.tel}`} tone="blanco">{t.cta.book}</Pill>
+          <span className="text-white/80">{contact.street}, {contact.city}</span>
         </div>
       </div>
     </>

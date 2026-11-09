@@ -8,7 +8,7 @@ export default defineConfig({
     target: 'es2020',
     chunkSizeWarningLimit: 1200,
     rollupOptions: {
-      input: { main: 'index.html', still: 'still.html' },
+      input: { main: 'index.html' },
       output: { manualChunks: { three: ['three'], r3f: ['@react-three/fiber', '@react-three/drei'] } },
     },
   },

@@ -35,11 +35,11 @@ export function Cursor() {
       const label = el?.dataset.cursor
       if (label) {
         txt.current!.textContent = label
-        gsap.to(ring.current, { width: 104, height: 104, backgroundColor: 'rgba(58,39,29,.92)', borderColor: 'rgba(58,39,29,0)', duration: 0.45, ease: 'expo.out' })
+        gsap.to(ring.current, { width: 104, height: 104, backgroundColor: 'rgba(228,84,24,.95)', borderColor: 'rgba(228,84,24,0)', duration: 0.45, ease: 'expo.out' })
         gsap.to(txt.current, { opacity: 1, duration: 0.3 })
         gsap.to(dot.current, { opacity: 0, duration: 0.2 })
       } else if (el) {
-        gsap.to(ring.current, { width: 64, height: 64, backgroundColor: 'rgba(58,39,29,.06)', duration: 0.4, ease: 'expo.out' })
+        gsap.to(ring.current, { width: 64, height: 64, backgroundColor: 'rgba(228,84,24,.12)', duration: 0.4, ease: 'expo.out' })
       }
       const m = el?.closest<HTMLElement>('[data-magnetic]') ?? null
       if (m !== mag) { if (mag) gsap.to(mag, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1,.4)' }); mag = m }
@@ -47,7 +47,7 @@ export function Cursor() {
     const out = (e: PointerEvent) => {
       const to = e.relatedTarget as HTMLElement | null
       if (to && to.closest('[data-cursor],[data-magnetic],a,button')) return
-      gsap.to(ring.current, { width: 40, height: 40, backgroundColor: 'rgba(58,39,29,0)', borderColor: 'rgba(58,39,29,.45)', duration: 0.4, ease: 'expo.out' })
+      gsap.to(ring.current, { width: 40, height: 40, backgroundColor: 'rgba(228,84,24,0)', borderColor: 'rgba(29,42,36,.45)', duration: 0.4, ease: 'expo.out' })
       gsap.to(txt.current, { opacity: 0, duration: 0.2 })
       gsap.to(dot.current, { opacity: 1, duration: 0.2 })
       if (mag) { gsap.to(mag, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1,.4)' }); mag = null }
@@ -65,10 +65,10 @@ export function Cursor() {
 
   return (
     <>
-      <div ref={ring} aria-hidden className="pointer-events-none fixed left-0 top-0 z-[100] flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-chocolate/45 opacity-0 mix-blend-normal">
-        <span ref={txt} className="text-[12px] tracking-[0.08em] text-crema opacity-0" />
+      <div ref={ring} aria-hidden className="pointer-events-none fixed left-0 top-0 z-[100] flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-tinta/45 opacity-0 ">
+        <span ref={txt} className="text-[12px] tracking-[0.08em] font-medium text-white opacity-0" />
       </div>
-      <div ref={dot} aria-hidden className="pointer-events-none fixed left-0 top-0 z-[100] h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-chocolate opacity-0" />
+      <div ref={dot} aria-hidden className="pointer-events-none fixed left-0 top-0 z-[100] h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-naranja opacity-0" />
     </>
   )
 }

@@ -67,8 +67,8 @@ export function RouterProvider({ children }: { children: ReactNode }) {
   return (
     <C.Provider value={{ route, go }}>
       {children}
-      <div ref={curtain} aria-hidden className="fixed inset-0 z-[90] hidden items-center justify-center bg-chocolate">
-        <p ref={label} className="gutter text-center font-serif text-[clamp(2.4rem,6vw,5.5rem)] leading-none text-crema" />
+      <div ref={curtain} aria-hidden className="fixed inset-0 z-[90] hidden items-center justify-center bg-naranja">
+        <p ref={label} className="gutter text-center font-display text-[clamp(2.4rem,7vw,7rem)] font-medium leading-[0.95] tracking-[-0.04em] text-white" />
       </div>
     </C.Provider>
   )

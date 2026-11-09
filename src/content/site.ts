@@ -44,17 +44,19 @@ export const philosophy = {
 }
 
 export const team = [
-  { name: 'Claudia Rubio', role: l('Directora del centro y terapeuta', 'Directora del centre i terapeuta') },
-  { name: 'Marilia Marinho', role: l('Fisioterapeuta, especialista en criomodelaje. Coordina el equipo', "Fisioterapeuta, especialista en criomodelatge. Coordina l'equip") },
-  { name: 'Paola Romero', role: l('Técnica en estética: postoperatorios y quiromasaje', 'Tècnica en estètica: postoperatoris i quiromassatge') },
-  { name: 'Hana Santiago', role: l('Fotodepilación láser, IPL médica y tratamientos faciales y corporales', 'Fotodepilació làser, IPL mèdica i tractaments facials i corporals') },
-  { name: 'Montse', role: l('Recepción y asesoría comercial', 'Recepció i assessoria comercial') },
+  { name: 'Claudia Rubio', photo: 'claudia', tone: 'naranja', role: l('Directora del centro y terapeuta', 'Directora del centre i terapeuta') },
+  { name: 'Marilia Marinho', photo: 'marilia', tone: 'orquidea', role: l('Fisioterapeuta, especialista en criomodelaje. Coordina el equipo', "Fisioterapeuta, especialista en criomodelatge. Coordina l'equip") },
+  { name: 'Paola Romero', photo: 'paola', tone: 'bosque', role: l('Técnica en estética: postoperatorios y quiromasaje', 'Tècnica en estètica: postoperatoris i quiromassatge') },
+  { name: 'Hana Santiago', photo: 'hana', tone: 'melocoton', role: l('Fotodepilación láser, IPL médica y tratamientos faciales y corporales', 'Fotodepilació làser, IPL mèdica i tractaments facials i corporals') },
+  { name: 'Montse', photo: 'montse', tone: 'naranja', role: l('Recepción y asesoría comercial', 'Recepció i assessoria comercial') },
 ]
 
 export const proof = { rating: '5,0', reviews: 62, source: 'Treatwell', url: 'https://www.treatwell.es/establecimiento/hebe-by-clau/' }
 
 export type Treatment = {
   name: L
+  /** clave de foto real en src/assets/foto */
+  img?: string
   desc?: L
   benefits?: L[]
   price?: string
@@ -68,6 +70,7 @@ export type Category = {
   kicker: L
   intro: L
   image: string
+  tone: 'naranja' | 'orquidea' | 'melocoton' | 'bosque'
   layout: 'split' | 'full' | 'stack' | 'frost'
   groups: { title: L; intro?: L; items: Treatment[] }[]
 }
@@ -76,7 +79,7 @@ const P = (path: string) => `https://hebebyclau.cat/es/products/${path}`
 
 export const categories: Category[] = [
   {
-    id: 'facial', layout: 'split', image: 'facial',
+    id: 'facial', layout: 'split', image: 'facial', tone: 'naranja',
     title: l('Estética facial y medicina estética', 'Estètica facial i medicina estètica'),
     kicker: l('Rostro', 'Rostre'),
     intro: l('Redefine y rejuvenece tus rasgos de forma sutil y armoniosa, con tratamientos de cabina y de medicina estética.', 'Redefineix i rejoveneix els teus trets de manera subtil i harmoniosa, amb tractaments de cabina i de medicina estètica.'),
@@ -84,10 +87,10 @@ export const categories: Category[] = [
       {
         title: l('Estética facial', 'Estètica facial'),
         items: [
-          { name: l('Hydra Hêbê', 'Hydra Hêbê'), url: P('hydra-hebe'), price: '110 €', duration: l('90 min · una sesión', '90 min · una sessió'),
+          { img: 'facial', name: l('Hydra Hêbê', 'Hydra Hêbê'), url: P('hydra-hebe'), price: '110 €', duration: l('90 min · una sesión', '90 min · una sessió'),
             desc: l('Mejora al instante el aspecto de tu piel. Más limpia, más tersa, más luminosa.', "Millora a l'instant l'aspecte de la teva pell. Més neta, més llisa, més lluminosa."),
             benefits: [l('Reduce poros, puntos negros y grasa', 'Redueix porus, punts negres i greix'), l('Piel más hidratada y rejuvenecida', 'Pell més hidratada i rejovenida')] },
-          { name: l('Lifting Glow', 'Lifting Glow'), url: P('reafirmant-d-estiu'), price: '90 €', duration: l('80 min', '80 min'),
+          { img: 'facial-masaje', name: l('Lifting Glow', 'Lifting Glow'), url: P('reafirmant-d-estiu'), price: '90 €', duration: l('80 min', '80 min'),
             desc: l('Ideal para pieles maduras o que buscan firmeza y efecto lifting.', 'Ideal per a pells madures o que busquen fermesa i efecte lifting.'),
             benefits: [l('Limpieza, diatermia y mascarilla de colágeno', 'Neteja, diatèrmia i mascareta de col·lagen'), l('Masaje facial tonificante y sérum tensor', 'Massatge facial tonificant i sèrum tensor')] },
           { name: l('Hidratación y luminosidad', 'Hidratació i lluminositat'), url: P('hidratacio-i-luminositat'), price: 'desde 65 €' },
@@ -99,9 +102,9 @@ export const categories: Category[] = [
         title: l('Medicina estética', 'Medicina estètica'),
         intro: l('Déjate asesorar por nuestro equipo de especialistas en medicina estética.', "Deixa't assessorar pel nostre equip d'especialistes en medicina estètica."),
         items: [
-          { name: l('Neuromodulación', 'Neuromodulació'), desc: l('Reduce líneas de expresión y arrugas, aportando a tu rostro una apariencia fresca y rejuvenecida.', "Redueix línies d'expressió i arrugues, i aporta al teu rostre una aparença fresca i rejovenida.") },
+          { img: 'medicina', name: l('Neuromodulación', 'Neuromodulació'), desc: l('Reduce líneas de expresión y arrugas, aportando a tu rostro una apariencia fresca y rejuvenecida.', "Redueix línies d'expressió i arrugues, i aporta al teu rostre una aparença fresca i rejovenida.") },
           { name: l('Aumento e hidratación de labios', 'Augment i hidratació de llavis'), desc: l('Consigue unos labios definidos, voluminosos y naturales.', 'Aconsegueix uns llavis definits, voluminosos i naturals.') },
-          { name: l('Ácido hialurónico', 'Àcid hialurònic'), desc: l('Restaura el volumen y mejora la simetría de tu rostro.', 'Restaura el volum i millora la simetria del teu rostre.') },
+          { img: 'medicina-2', name: l('Ácido hialurónico', 'Àcid hialurònic'), desc: l('Restaura el volumen y mejora la simetría de tu rostro.', 'Restaura el volum i millora la simetria del teu rostre.') },
           { name: l('Vitaminas y mesoterapia', 'Vitamines i mesoteràpia'), desc: l('Hidrata y revitaliza tu piel desde el interior.', "Hidrata i revitalitza la teva pell des de l'interior.") },
           { name: l('Peelings químicos', 'Peelings químics'), desc: l('Renueva la piel, eliminando impurezas y aportando luminosidad.', 'Renova la pell, elimina impureses i aporta lluminositat.') },
           { name: l('Manchas en la piel', 'Taques a la pell'), desc: l('Recupera una piel luminosa y uniforme con tratamientos despigmentantes.', 'Recupera una pell lluminosa i uniforme amb tractaments despigmentants.') },
@@ -110,7 +113,7 @@ export const categories: Category[] = [
     ],
   },
   {
-    id: 'corporal', layout: 'full', image: 'corporal',
+    id: 'corporal', layout: 'full', image: 'cuerpo-cut', tone: 'orquidea',
     title: l('Estética corporal, depilación láser y diatermia', 'Estètica corporal, depilació làser i diatèrmia'),
     kicker: l('Cuerpo', 'Cos'),
     intro: l('Hidratación, reafirmación y revitalización para lucir una piel suave, firme y cuidada.', 'Hidratació, reafirmació i revitalització per lluir una pell suau, ferma i cuidada.'),
@@ -119,10 +122,10 @@ export const categories: Category[] = [
         title: l('Estética corporal', 'Estètica corporal'),
         intro: l('Tonifica el cuerpo y mejora la circulación con electroestimulación y presoterapia.', 'Tonifica el cos i millora la circulació amb electroestimulació i pressoteràpia.'),
         items: [
-          { name: l('Body Sculpt Drenante', 'Body Sculpt Drenant'), url: P('body-sculpt-drenant'), duration: l('10 sesiones de I-Model · 25 min', '10 sessions de I-Model · 25 min'),
+          { img: 'corporal', name: l('Body Sculpt Drenante', 'Body Sculpt Drenant'), url: P('body-sculpt-drenant'), duration: l('10 sesiones de I-Model · 25 min', '10 sessions de I-Model · 25 min'),
             desc: l('Para tonificar, reducir volumen y activar el cuerpo sin esfuerzo.', 'Per tonificar, reduir volum i activar el cos sense esforç.'),
             benefits: [l('Abdomen, piernas, glúteos, brazos y espalda', 'Abdomen, cames, glutis, braços i esquena'), l('Mejora de la circulación y activación muscular', 'Millora de la circulació i activació muscular')] },
-          { name: l('Drenantes', 'Drenants'), url: P('drenants'), price: 'desde 22 €' },
+          { img: 'presoterapia', name: l('Drenantes', 'Drenants'), url: P('drenants'), price: 'desde 22 €' },
           { name: l('Rejuvenecedores y reafirmantes', 'Rejovenidors i reafirmants'), url: P('rejovenidors-i-reafirmants') },
           { name: l('Pack Hêbê Silhouette', 'Pack Hêbê Silhouette'), url: P('hebe-silhouette') },
         ],
@@ -130,7 +133,7 @@ export const categories: Category[] = [
       {
         title: l('Depilación láser', 'Depilació làser'),
         items: [
-          { name: l('Depilación láser femenina', 'Depilació làser femenina'), url: P('depilacio-laser-feminina'), price: 'desde 19,90 €' },
+          { img: 'laser', name: l('Depilación láser femenina', 'Depilació làser femenina'), url: P('depilacio-laser-feminina'), price: 'desde 19,90 €' },
           { name: l('Depilación láser masculina', 'Depilació làser masculina'), url: P('depilacio-laser-masculina-1'), price: 'desde 24,90 €' },
         ],
       },
@@ -141,7 +144,7 @@ export const categories: Category[] = [
     ],
   },
   {
-    id: 'bienestar', layout: 'stack', image: 'bienestar',
+    id: 'bienestar', layout: 'stack', image: 'bienestar', tone: 'melocoton',
     title: l('Topcorpus, masajes y micropigmentación', 'Topcorpus, massatges i micropigmentació'),
     kicker: l('Bienestar', 'Benestar'),
     intro: l('Un entorno acogedor que invita a la relajación, con profesionales con experiencia y dedicación.', 'Un entorn acollidor que convida a la relaxació, amb professionals amb experiència i dedicació.'),
@@ -150,14 +153,14 @@ export const categories: Category[] = [
         title: l('Tratamientos', 'Tractaments'),
         items: [
           { name: l('Topcorpus', 'Topcorpus'), url: P('topcorpus') },
-          { name: l('Masajes', 'Massatges'), url: P('massatges'), desc: l('Masaje terapéutico y drenaje linfático manual.', 'Massatge terapèutic i drenatge limfàtic manual.') },
-          { name: l('Micropigmentación', 'Micropigmentació'), url: P('micropgmanetacio'), desc: l('Microblading y micropigmentación.', 'Microblading i micropigmentació.') },
+          { img: 'bienestar', name: l('Masajes', 'Massatges'), url: P('massatges'), desc: l('Masaje terapéutico y drenaje linfático manual.', 'Massatge terapèutic i drenatge limfàtic manual.') },
+          { img: 'consulta', name: l('Micropigmentación', 'Micropigmentació'), url: P('micropgmanetacio'), desc: l('Microblading y micropigmentación.', 'Microblading i micropigmentació.') },
         ],
       },
     ],
   },
   {
-    id: 'crio', layout: 'frost', image: 'crio',
+    id: 'crio', layout: 'frost', image: 'crio', tone: 'bosque',
     title: l('Crio by Hêbê', 'Crio by Hêbê'),
     kicker: l('Tecnología', 'Tecnologia'),
     intro: l('Tecnología avanzada para tu belleza: tratamientos no invasivos que utilizan el frío controlado.', 'Tecnologia avançada per a la teva bellesa: tractaments no invasius que utilitzen el fred controlat.'),
@@ -165,9 +168,9 @@ export const categories: Category[] = [
       {
         title: l('Crio by Hêbê', 'Crio by Hêbê'),
         items: [
-          { name: l('Crio by Hêbê Corporal', 'Crio by Hêbê Corporal'), desc: l('Combina la criolipólisis con tecnologías de nueva generación para moldear la silueta.', 'Combina la criolipòlisi amb tecnologies de nova generació per modelar la silueta.'),
+          { img: 'cuerpo-cut', name: l('Crio by Hêbê Corporal', 'Crio by Hêbê Corporal'), desc: l('Combina la criolipólisis con tecnologías de nueva generación para moldear la silueta.', 'Combina la criolipòlisi amb tecnologies de nova generació per modelar la silueta.'),
             benefits: [l('No invasivo, con frío controlado', 'No invasiu, amb fred controlat'), l('Reduce la grasa localizada y mejora la textura de la piel', 'Redueix el greix localitzat i millora la textura de la pell')] },
-          { name: l('Crio by Hêbê Facial', 'Crio by Hêbê Facial'), desc: l('Combina el poder del frío con tecnologías especializadas para el rostro.', 'Combina el poder del fred amb tecnologies especialitzades per al rostre.'),
+          { img: 'crio', name: l('Crio by Hêbê Facial', 'Crio by Hêbê Facial'), desc: l('Combina el poder del frío con tecnologías especializadas para el rostro.', 'Combina el poder del fred amb tecnologies especialitzades per al rostre.'),
             benefits: [l('Combate la flacidez', 'Combat la flacciditat'), l('Revitaliza la piel y mejora su calidad', 'Revitalitza la pell i en millora la qualitat')] },
         ],
       },
@@ -175,10 +178,5 @@ export const categories: Category[] = [
   },
 ]
 
-/** Destacados de la home (precios reales de la web original). */
-export const featured: { cat: Category['id']; t: Treatment }[] = [
-  { cat: 'facial', t: categories[0].groups[0].items[0] },
-  { cat: 'facial', t: categories[0].groups[0].items[1] },
-  { cat: 'corporal', t: categories[1].groups[0].items[0] },
-  { cat: 'crio', t: categories[3].groups[0].items[0] },
-]
+/** Resultados publicados por el centro en su web (fotos reales de antes y después). */
+export const results = ['resultado-1', 'resultado-2', 'resultado-3']
