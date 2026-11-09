@@ -40,15 +40,17 @@ function Card({ m, i }: { m: TeamMember; i: number }) {
           style={{ transformStyle: 'preserve-3d' }}
         >
           <div className="relative aspect-[4/5] overflow-hidden">
+            <div className="h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.07]">
             <motion.div
-              className="h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.07]"
-              initial={{ clipPath: 'inset(100% 0 0 0)' }}
-              whileInView={{ clipPath: 'inset(0% 0 0 0)' }}
+              className="h-full w-full"
+              initial={{ scale: 1.18, filter: 'saturate(0.2)' }}
+              whileInView={{ scale: 1, filter: 'saturate(1)' }}
               viewport={{ once: true }}
-              transition={{ duration: 1.1, delay: 0.2 + i * 0.1, ease: [0.7, 0, 0.2, 1] }}
+              transition={{ duration: 1.4, delay: 0.15 + i * 0.1, ease: [0.2, 0.8, 0.2, 1] }}
             >
               {m.photo ? <img src={m.photo} alt={m.name} loading="lazy" className="h-full w-full object-cover object-top" /> : <Silhouette />}
             </motion.div>
+            </div>
             {m.placeholder && <span className="pendiente absolute left-3 top-3">{t.team.pending}</span>}
             {/* información adicional */}
             <div className={`absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-noche via-noche/85 to-transparent p-3.5 pt-12 text-sm text-white transition-transform sm:p-5 sm:pt-14 sm:text-base duration-500 ease-out group-hover:translate-y-0 ${open ? '!translate-y-0' : ''}`}>
