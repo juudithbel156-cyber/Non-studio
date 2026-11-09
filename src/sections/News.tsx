@@ -3,6 +3,7 @@ import { useI18n } from '../i18n/I18n'
 import { promos } from '../content/promos'
 import { gsap, ScrollTrigger } from '../hooks/smoothScroll'
 import { usePrefersReducedMotion } from '../hooks/env'
+import { Wave } from '../components/Wave'
 
 export function News() {
   const { t, l } = useI18n()
@@ -32,8 +33,9 @@ export function News() {
   }, [reduced])
 
   return (
-    <section id="novedades" ref={section} aria-labelledby="novedades-title" className="relative overflow-hidden bg-nube py-24 lg:flex lg:h-[100svh] lg:items-center lg:py-0">
-      <div className="w-full">
+    <section id="novedades" ref={section} aria-labelledby="novedades-title" className="patron-calido relative bg-[#FFE0DA] py-24 lg:flex lg:h-[100svh] lg:items-center lg:py-0">
+      <Wave color="#FFE0DA" />
+      <div className="w-full overflow-hidden">
         <div className="container-j mb-10 flex items-end justify-between gap-6">
           <div>
             <h2 id="novedades-title" className="h-section text-azul">{t.news.title}</h2>

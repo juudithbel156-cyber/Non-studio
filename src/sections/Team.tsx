@@ -4,6 +4,8 @@ import { useI18n } from '../i18n/I18n'
 import { team, type TeamMember } from '../content/team'
 import { SectionHead } from '../components/Reveal'
 import { TiltCard } from '../components/TiltCard'
+import { Wave } from '../components/Wave'
+import { ToyDeco } from '../components/ToyDeco'
 
 function Silhouette() {
   return (
@@ -45,7 +47,7 @@ function Card({ m, i }: { m: TeamMember; i: number }) {
               viewport={{ once: true }}
               transition={{ duration: 1.1, delay: 0.2 + i * 0.1, ease: [0.7, 0, 0.2, 1] }}
             >
-              {m.photo ? <img src={m.photo} alt={m.name} loading="lazy" className="h-full w-full object-cover" /> : <Silhouette />}
+              {m.photo ? <img src={m.photo} alt={m.name} loading="lazy" className="h-full w-full object-cover object-top" /> : <Silhouette />}
             </motion.div>
             {m.placeholder && <span className="pendiente absolute left-3 top-3">{t.team.pending}</span>}
             {/* información adicional */}
@@ -67,14 +69,13 @@ function Card({ m, i }: { m: TeamMember; i: number }) {
 export function Team() {
   const { t } = useI18n()
   return (
-    <section id="equipo" aria-labelledby="equipo-title" className="relative overflow-hidden bg-azul py-28 md:py-36">
-      {/* destellos de la marca */}
-      <svg aria-hidden viewBox="0 0 100 100" className="pointer-events-none absolute -right-16 -top-16 hidden h-80 w-80 opacity-40 md:block">
-        <g stroke="#FFCC00" strokeWidth="7" strokeLinecap="round"><path d="M20 30l30-18" /><path d="M28 55h40" /><path d="M20 80l30 18" /></g>
-      </svg>
+    <section id="equipo" aria-labelledby="equipo-title" className="patron-oscuro relative bg-azul py-28 md:py-36">
+      <Wave color="#1B3D9A" flip />
       <div className="container-j relative">
-        <SectionHead id="equipo-title" title={t.team.title} lead={t.team.lead} tone="light" />
-        <ul className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
+        <SectionHead id="equipo-title" title={t.team.title} lead={t.team.lead} tone="light" deco={
+          <ToyDeco className="h-40 w-48 md:h-64 md:w-80" camZ={4.9} toys={[{ kind: 'teddy', position: [-0.5, 0, 0], rotation: [0, 0.4, 0], scale: 1 }, { kind: 'star', position: [1.2, 2.1, -0.5], scale: 0.6, air: true }]} />
+        } />
+        <ul className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-5 [&>li:last-child:nth-child(odd)]:col-span-2 [&>li:last-child:nth-child(odd)]:mx-auto [&>li:last-child:nth-child(odd)]:w-[calc(50%-.375rem)] lg:[&>li:last-child:nth-child(odd)]:col-span-1 lg:[&>li:last-child:nth-child(odd)]:w-auto">
           {team.map((m, i) => <Card key={i} m={m} i={i} />)}
         </ul>
       </div>

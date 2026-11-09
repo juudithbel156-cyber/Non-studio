@@ -4,13 +4,15 @@ import { site } from '../config/site'
 import { scrollToTarget } from '../hooks/smoothScroll'
 import { IconArrowUp } from './Icons'
 import { NAV } from './Header'
+import { Wave } from './Wave'
 
 const key = { inicio: 'home', tienda: 'store', equipo: 'team', juguetes: 'toys', marcas: 'brands', novedades: 'news', servicios: 'services', contacto: 'contact' } as const
 
 export function Footer() {
   const { t } = useI18n()
   return (
-    <footer className="bg-noche text-white">
+    <footer className="relative bg-noche text-white">
+      <Wave color="#10296F" flip />
       <div className="container-j grid gap-10 py-14 md:grid-cols-[1.2fr_1fr_auto]">
         <div>
           <Logo size="lg" />

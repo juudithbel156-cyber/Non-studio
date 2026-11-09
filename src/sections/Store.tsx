@@ -7,6 +7,7 @@ import { IconCamera, IconMap, IconPhone, IconPin } from '../components/Icons'
 import { gsap } from '../hooks/smoothScroll'
 import { hasWebGL, useInView, usePrefersReducedMotion } from '../hooks/env'
 import { ToyArt } from '../components/ToyArt'
+import { Wave } from '../components/Wave'
 
 type SceneProps = { active: boolean; reduced: boolean }
 
@@ -42,7 +43,8 @@ export function Store() {
   }, [reduced])
 
   return (
-    <section id="tienda" aria-labelledby="tienda-title" className="relative bg-white pb-28 pt-24 md:pt-32">
+    <section id="tienda" aria-labelledby="tienda-title" className="patron-claro relative bg-[#D6E4FF] pb-28 pt-24 md:pt-32">
+      <Wave color="#D6E4FF" />
       <div className="container-j grid items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
         <div>
           <Reveal>
@@ -53,7 +55,7 @@ export function Store() {
           <ul className="mt-10 grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
             {storePillars.map((p, i) => (
               <Reveal key={i} delay={i * 0.08}>
-                <li className="h-full rounded-3xl bg-nube p-5 lg:flex lg:items-baseline lg:gap-4 lg:py-4">
+                <li className="h-full rounded-3xl bg-nube p-5 lg:flex lg:items-baseline lg:gap-4 lg:py-4" style={{ background: "rgb(255 255 255 / .72)" }}>
                   <h3 className="shrink-0 text-xl font-bold text-azul lg:w-52">{l(p.title)}</h3>
                   <p className="mt-1.5 text-[.98rem] leading-relaxed text-gris">{l(p.text)}</p>
                 </li>
@@ -77,7 +79,7 @@ export function Store() {
 
         {/* maqueta 3D del establecimiento */}
         <Reveal y={60}>
-          <div ref={sceneBox} className="relative aspect-[4/3.6] w-full overflow-hidden rounded-[36px] bg-nube shadow-[inset_0_0_0_1px_rgba(27,61,154,.08)]">
+          <div ref={sceneBox} className="relative aspect-[4/3.6] w-full overflow-hidden rounded-[36px] bg-white/55 shadow-[0_30px_60px_-30px_rgba(16,41,111,.45)] backdrop-blur-sm">
             {Scene ? (
               <Scene active={near} reduced={reduced} />
             ) : (

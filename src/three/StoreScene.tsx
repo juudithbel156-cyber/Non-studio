@@ -107,7 +107,6 @@ export default function StoreScene({ active, reduced }: { active: boolean; reduc
       camera={{ position: [4.4, 3.4, 10.2], fov: 32 }}
       aria-hidden
     >
-      <color attach="background" args={['#EEF2FF']} />
       <Suspense fallback={null}>
       <hemisphereLight args={['#ffffff', '#BFD0FF', 1.1]} />
       <directionalLight position={[4, 7, 5]} intensity={2.2} castShadow shadow-mapSize={[1024, 1024]} />

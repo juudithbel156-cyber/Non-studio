@@ -3,6 +3,8 @@ import { motion } from 'framer-motion'
 import { useI18n } from '../i18n/I18n'
 import { services, type ServiceIcon } from '../content/services'
 import { SectionHead } from '../components/Reveal'
+import { Wave } from '../components/Wave'
+import { ToyDeco } from '../components/ToyDeco'
 
 const glyph: Record<ServiceIcon, ReactNode> = {
   chat: <path d="M6 8h20v13H14l-6 5v-5H6Z" />,
@@ -40,9 +42,12 @@ function Icon3D({ icon, color }: { icon: ServiceIcon; color: string }) {
 export function Services() {
   const { t, l } = useI18n()
   return (
-    <section id="servicios" aria-labelledby="servicios-title" className="relative bg-white py-28 md:py-36">
+    <section id="servicios" aria-labelledby="servicios-title" className="patron-claro relative bg-[#D6E4FF] py-28 md:py-36">
+      <Wave color="#D6E4FF" flip />
       <div className="container-j">
-        <SectionHead id="servicios-title" title={t.services.title} lead={t.services.lead} />
+        <SectionHead id="servicios-title" title={t.services.title} lead={t.services.lead} deco={
+          <ToyDeco className="h-36 w-48 md:h-56 md:w-80" camZ={4.8} toys={[{ kind: 'rings', position: [-0.8, 0, 0], scale: 0.95 }, { kind: 'top', position: [0.9, 0, 0.4], scale: 0.8 }]} />
+        } />
         <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s, i) => (
             <motion.li
@@ -51,7 +56,7 @@ export function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-8% 0px' }}
               transition={{ duration: 0.7, delay: (i % 3) * 0.08 }}
-              className="group flex gap-5 rounded-[28px] bg-nube p-6 transition-colors duration-500 hover:bg-[#E3E9FF]"
+              className="group flex gap-5 rounded-[28px] bg-white/75 p-6 shadow-[0_20px_40px_-30px_rgba(16,41,111,.5)] transition-colors duration-500 hover:bg-white"
             >
               <Icon3D icon={s.icon} color={colors[i % colors.length]} />
               <div className="flex-1">

@@ -1,8 +1,8 @@
 import type { L } from './types'
 
 /**
- * EQUIPO — CONTENIDO PROVISIONAL.
- * Sustituye cada ficha por los datos reales y pon `placeholder: false`.
+ * EQUIPO — fotos reales; FALTAN nombre, puesto y textos de cada persona.
+ * Completa cada ficha y pon `placeholder: false`.
  * Fotos: /public/images/equipo/nombre.webp (vertical 4:5).
  */
 export type TeamMember = {
@@ -16,35 +16,43 @@ export type TeamMember = {
 
 export const team: TeamMember[] = [
   {
-    name: 'Nombre y apellido',
-    role: { es: 'Responsable de tienda', ca: 'Responsable de botiga' },
-    bio: { es: 'Breve presentación de la persona.', ca: 'Breu presentació de la persona.' },
-    more: { es: 'Su juguete favorito, qué recomienda o cuánto tiempo lleva en el equipo.', ca: "La seva joguina preferida, què recomana o quant temps fa que és a l'equip." },
-    photo: '',
+    name: 'Nombre pendiente',
+    role: { es: 'Equipo Juguettos Martorell', ca: 'Equip Juguettos Martorell' },
+    bio: { es: 'Añade aquí una breve presentación.', ca: 'Afegeix aquí una breu presentació.' },
+    more: { es: 'Su juguete favorito, qué recomienda o cuánto tiempo lleva en la tienda.', ca: 'La seva joguina preferida, què recomana o quant temps fa que és a la botiga.' },
+    photo: '/images/equipo/persona-1.webp',
     placeholder: true,
   },
   {
-    name: 'Nombre y apellido',
-    role: { es: 'Asesor/a de juguete', ca: 'Assessor/a de joguina' },
-    bio: { es: 'Breve presentación de la persona.', ca: 'Breu presentació de la persona.' },
-    more: { es: 'Especialidad: por ejemplo, juegos de mesa o primera infancia.', ca: 'Especialitat: per exemple, jocs de taula o primera infància.' },
-    photo: '',
+    name: 'Nombre pendiente',
+    role: { es: 'Equipo Juguettos Martorell', ca: 'Equip Juguettos Martorell' },
+    bio: { es: 'Añade aquí una breve presentación.', ca: 'Afegeix aquí una breu presentació.' },
+    more: { es: 'Su juguete favorito, qué recomienda o cuánto tiempo lleva en la tienda.', ca: 'La seva joguina preferida, què recomana o quant temps fa que és a la botiga.' },
+    photo: '/images/equipo/persona-2.webp',
     placeholder: true,
   },
   {
-    name: 'Nombre y apellido',
-    role: { es: 'Asesor/a de juguete', ca: 'Assessor/a de joguina' },
-    bio: { es: 'Breve presentación de la persona.', ca: 'Breu presentació de la persona.' },
-    more: { es: 'Un dato curioso o su consejo para elegir un regalo.', ca: 'Una dada curiosa o el seu consell per triar un regal.' },
-    photo: '',
+    name: 'Nombre pendiente',
+    role: { es: 'Equipo Juguettos Martorell', ca: 'Equip Juguettos Martorell' },
+    bio: { es: 'Añade aquí una breve presentación.', ca: 'Afegeix aquí una breu presentació.' },
+    more: { es: 'Su juguete favorito, qué recomienda o cuánto tiempo lleva en la tienda.', ca: 'La seva joguina preferida, què recomana o quant temps fa que és a la botiga.' },
+    photo: '/images/equipo/persona-3.webp',
     placeholder: true,
   },
   {
-    name: 'Nombre y apellido',
-    role: { es: 'Atención al cliente', ca: 'Atenció al client' },
-    bio: { es: 'Breve presentación de la persona.', ca: 'Breu presentació de la persona.' },
-    more: { es: 'Qué es lo que más le gusta de trabajar en la tienda.', ca: "Què és el que més li agrada de treballar a la botiga." },
-    photo: '',
+    name: 'Nombre pendiente',
+    role: { es: 'Equipo Juguettos Martorell', ca: 'Equip Juguettos Martorell' },
+    bio: { es: 'Añade aquí una breve presentación.', ca: 'Afegeix aquí una breu presentació.' },
+    more: { es: 'Su juguete favorito, qué recomienda o cuánto tiempo lleva en la tienda.', ca: 'La seva joguina preferida, què recomana o quant temps fa que és a la botiga.' },
+    photo: '/images/equipo/persona-4.webp',
+    placeholder: true,
+  },
+  {
+    name: 'Nombre pendiente',
+    role: { es: 'Equipo Juguettos Martorell', ca: 'Equip Juguettos Martorell' },
+    bio: { es: 'Añade aquí una breve presentación.', ca: 'Afegeix aquí una breu presentació.' },
+    more: { es: 'Su juguete favorito, qué recomienda o cuánto tiempo lleva en la tienda.', ca: 'La seva joguina preferida, què recomana o quant temps fa que és a la botiga.' },
+    photo: '/images/equipo/persona-5.webp',
     placeholder: true,
   },
 ]

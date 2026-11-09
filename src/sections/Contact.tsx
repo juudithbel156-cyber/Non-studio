@@ -2,6 +2,8 @@ import { useState, type FormEvent } from 'react'
 import { useI18n } from '../i18n/I18n'
 import { site } from '../config/site'
 import { Reveal, SectionHead } from '../components/Reveal'
+import { Wave } from '../components/Wave'
+import { ToyDeco } from '../components/ToyDeco'
 import { IconClock, IconMap, IconPhone, IconPin, IconSocial } from '../components/Icons'
 
 type Status = 'idle' | 'sending' | 'sent' | 'mail' | 'error' | 'unconfigured'
@@ -51,11 +53,11 @@ function ContactForm() {
     setStatus('unconfigured')
   }
 
-  const field = 'mt-1.5 w-full rounded-2xl border-2 border-transparent bg-white px-4 py-3 text-tinta shadow-[inset_0_0_0_1px_rgba(27,61,154,.15)] outline-none transition focus:border-azul'
+  const field = 'mt-1.5 w-full rounded-2xl border-2 border-transparent bg-nube px-4 py-3 text-tinta shadow-[inset_0_0_0_1px_rgba(27,61,154,.15)] outline-none transition focus:border-azul'
   const Err = ({ k }: { k: string }) => (errors[k] ? <span className="mt-1 block text-sm font-bold text-rojo" id={`${k}-err`}>{errors[k]}</span> : null)
 
   return (
-    <form onSubmit={submit} noValidate className="rounded-[32px] bg-nube p-6 sm:p-8">
+    <form onSubmit={submit} noValidate className="rounded-[32px] bg-white p-6 shadow-[0_30px_60px_-30px_rgba(0,0,0,.5)] sm:p-8">
       <h3 className="text-2xl font-extrabold text-azul">{t.contact.form}</h3>
       <div className="mt-5 grid gap-4 sm:grid-cols-2">
         <label className="block font-bold">{t.contact.name}
@@ -95,12 +97,15 @@ export function Contact() {
   const { t, lang } = useI18n()
   const social = site.social.filter((s) => s.url)
   return (
-    <section id="contacto" aria-labelledby="contacto-title" className="relative bg-white pb-24 pt-28 md:pt-36">
+    <section id="contacto" aria-labelledby="contacto-title" className="patron-oscuro relative bg-azul pb-24 pt-28 md:pt-36">
+      <Wave color="#1B3D9A" />
       <div className="container-j">
-        <SectionHead id="contacto-title" title={t.contact.title} lead={t.contact.lead} />
+        <SectionHead id="contacto-title" title={t.contact.title} lead={t.contact.lead} tone="light" deco={
+          <ToyDeco className="h-36 w-48 md:h-56 md:w-80" camZ={4.6} toys={[{ kind: 'duck', position: [-0.6, 0, 0.2], rotation: [0, 0.9, 0], scale: 1.1 }, { kind: 'ball', position: [1.0, 0, -0.3], scale: 0.9 }]} />
+        } />
         <div className="grid gap-6 lg:grid-cols-[1fr_1.25fr]">
           <Reveal>
-            <div className="flex h-full flex-col gap-6 rounded-[32px] bg-azul p-6 text-white sm:p-8">
+            <div className="flex h-full flex-col gap-6 rounded-[32px] bg-noche/70 p-6 text-white ring-1 ring-white/10 sm:p-8">
               <address className="not-italic">
                 <p className="font-display text-2xl font-extrabold">{site.name}</p>
                 <p className="mt-3 flex items-start gap-2 text-lg"><IconPin className="mt-1 shrink-0 text-amarillo" />
@@ -146,7 +151,7 @@ export function Contact() {
           <Reveal delay={0.08}><ContactForm /></Reveal>
         </div>
         <Reveal className="mt-6">
-          <div className="overflow-hidden rounded-[32px] shadow-[0_0_0_1px_rgba(27,61,154,.1)]">
+          <div className="overflow-hidden rounded-[32px] bg-white shadow-[0_30px_60px_-30px_rgba(0,0,0,.5)]">
             {import.meta.env.VITE_NO_EMBED ? (
               <a href={site.mapsUrl} target="_blank" rel="noopener noreferrer" className="slot flex h-[260px] flex-col items-center justify-center gap-3 rounded-[32px] text-azul">
                 <IconMap size={36} />

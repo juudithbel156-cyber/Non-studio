@@ -8,6 +8,8 @@ import { ToyArt } from '../components/ToyArt'
 import { IconChevron, IconClose, IconMap, IconPhone } from '../components/Icons'
 import { site } from '../config/site'
 import { stopScroll } from '../hooks/smoothScroll'
+import { Wave } from '../components/Wave'
+import { ToyDeco } from '../components/ToyDeco'
 
 function tint(hex: string, a: number) {
   const n = parseInt(hex.slice(1), 16)
@@ -35,7 +37,7 @@ function CategoryCard({ c, i, onOpen }: { c: Category; i: number; onOpen: () => 
           <motion.div
             layoutId={`cat-bg-${c.id}`}
             className="absolute inset-0 rounded-[28px] shadow-[0_24px_40px_-24px_rgba(16,41,111,.55)] transition-shadow duration-500 group-hover:shadow-[0_40px_60px_-26px_rgba(16,41,111,.7)]"
-            style={{ background: `linear-gradient(165deg, ${tint(c.color, 0.16)}, ${tint(c.color, 0.32)})` }}
+            style={{ background: `linear-gradient(165deg, #ffffff 30%, ${tint(c.color, 0.28)})` }}
           />
           {/* la ilustración sobresale de la tarjeta */}
           <div className="relative -mt-14 px-4" style={{ transform: 'translateZ(60px)' }}>
@@ -104,9 +106,12 @@ export function Toys() {
   useEffect(() => { stopScroll(open !== null) }, [open])
 
   return (
-    <section id="juguetes" aria-labelledby="juguetes-title" className="relative bg-nube py-28 md:py-36">
+    <section id="juguetes" aria-labelledby="juguetes-title" className="patron-calido relative bg-[#FFE7A0] py-28 md:py-36">
+      <Wave color="#FFE7A0" />
       <div className="container-j">
-        <SectionHead id="juguetes-title" title={t.toys.title} lead={t.toys.lead} />
+        <SectionHead id="juguetes-title" title={t.toys.title} lead={t.toys.lead} deco={
+          <ToyDeco className="h-36 w-56 md:h-60 md:w-96" camZ={5.8} toys={[{ kind: 'car', position: [-0.9, 0, 0.3], rotation: [0, 0.6, 0], scale: 0.95 }, { kind: 'bricks', position: [1.4, 0, -0.4], rotation: [0, -0.5, 0], scale: 0.7 }]} />
+        } />
         <LayoutGroup>
           <ul className="grid grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-3 lg:grid-cols-5 lg:gap-x-5">
             {categories.map((c, i) => <CategoryCard key={c.id} c={c} i={i} onOpen={() => setOpen(i)} />)}

@@ -97,7 +97,7 @@ export function Hero() {
         </div>
 
         {/* velo de transición hacia la siguiente sección */}
-        <div ref={veil} aria-hidden className="pointer-events-none absolute inset-0 bg-white opacity-0" />
+        <div ref={veil} aria-hidden className="pointer-events-none absolute inset-0 bg-[#D6E4FF] opacity-0" />
       </div>
     </section>
   )

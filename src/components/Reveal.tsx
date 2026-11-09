@@ -16,11 +16,14 @@ export function Reveal({ children, delay = 0, className = '', y = 28 }: { childr
   )
 }
 
-export function SectionHead({ title, lead, tone = 'dark', id }: { title: string; lead?: string; tone?: 'dark' | 'light'; id?: string }) {
+export function SectionHead({ title, lead, tone = 'dark', id, deco }: { title: string; lead?: string; tone?: 'dark' | 'light'; id?: string; deco?: ReactNode }) {
   return (
-    <Reveal className="mb-12 max-w-3xl md:mb-16">
-      <h2 id={id} className={`h-section ${tone === 'light' ? 'text-white' : 'text-azul'}`}>{title}</h2>
-      {lead && <p className={`lead mt-5 ${tone === 'light' ? '!text-white/75' : ''}`}>{lead}</p>}
-    </Reveal>
+    <div className="relative mb-10 flex flex-col-reverse gap-2 md:mb-14 md:flex-row md:items-end md:justify-between md:gap-8">
+      <Reveal className="max-w-3xl">
+        <h2 id={id} className={`h-section ${tone === 'light' ? 'text-white' : 'text-azul'}`} style={{ textWrap: 'balance' }}>{title}</h2>
+        {lead && <p className={`lead mt-5 ${tone === 'light' ? '!text-white/80' : ''}`}>{lead}</p>}
+      </Reveal>
+      {deco && <div className="-mb-4 -mt-6 self-end md:-my-10 md:shrink-0">{deco}</div>}
+    </div>
   )
 }
