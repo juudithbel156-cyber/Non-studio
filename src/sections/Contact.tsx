@@ -147,6 +147,13 @@ export function Contact() {
         </div>
         <Reveal className="mt-6">
           <div className="overflow-hidden rounded-[32px] shadow-[0_0_0_1px_rgba(27,61,154,.1)]">
+            {import.meta.env.VITE_NO_EMBED ? (
+              <a href={site.mapsUrl} target="_blank" rel="noopener noreferrer" className="slot flex h-[260px] flex-col items-center justify-center gap-3 rounded-[32px] text-azul">
+                <IconMap size={36} />
+                <span className="font-display text-xl font-bold">{t.contact.openMaps}</span>
+                <span className="text-sm text-gris">{site.address.street}, {site.address.city}</span>
+              </a>
+            ) : (
             <iframe
               title={`Mapa: ${site.address.street}, ${site.address.city}`}
               src={site.mapsEmbed}
@@ -154,6 +161,7 @@ export function Contact() {
               referrerPolicy="no-referrer-when-downgrade"
               className="block h-[360px] w-full border-0 md:h-[440px]"
             />
+            )}
           </div>
         </Reveal>
       </div>
