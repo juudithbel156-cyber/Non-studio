@@ -30,7 +30,7 @@ export function Visit() {
         </div>
         <div className="relative grid gap-4 md:col-span-6 md:col-start-7">
           <div className="stitch-box relative aspect-[4/3] overflow-hidden rounded-[6px] text-cuero md:aspect-auto md:h-full md:min-h-[520px]">
-            <iframe title="Mapa: NAU essentials, Carrer Pintor Fortuny 6, Martorell" src={store.mapsEmbed} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="absolute inset-0 h-full w-full border-0 grayscale-[.85] sepia-[.2]" />
+            {import.meta.env.VITE_NO_EMBED ? (<a href={store.maps} target="_blank" rel="noopener noreferrer" className="absolute inset-0 grid place-items-center bg-lino text-negro"><span className="text-center"><span className="block font-serif text-[34px] font-light italic">Carrer Pintor Fortuny, 6</span><span className="mt-3 inline-block border-b border-negro text-[14px]">Abrir en Google Maps</span></span></a>) : <iframe title="Mapa: NAU essentials, Carrer Pintor Fortuny 6, Martorell" src={import.meta.env.VITE_NO_EMBED ? undefined : store.mapsEmbed} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="absolute inset-0 h-full w-full border-0 grayscale-[.85] sepia-[.2]" />}
           </div>
           <img src={IMG.sombrero} alt="" loading="lazy" className="absolute -right-4 -top-16 hidden w-40 rotate-6 shadow-[0_30px_60px_-30px_rgba(0,0,0,.5)] md:block" />
         </div>
