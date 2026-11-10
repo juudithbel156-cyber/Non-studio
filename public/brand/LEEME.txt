@@ -1,3 +1,0 @@
-Coloca aquí el logotipo oficial de Juguettos (logo-juguettos.svg o .png)
-y activa su ruta en src/config/site.ts -> brand.logoSrc.
-Mientras no exista, la web muestra una versión tipográfica provisional.

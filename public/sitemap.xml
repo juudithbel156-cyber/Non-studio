@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- PENDIENTE: sustituir el dominio por el definitivo -->
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <url>
-    <loc>https://www.juguettosmartorell.es/</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.juguettosmartorell.es/" />
-    <xhtml:link rel="alternate" hreflang="ca" href="https://www.juguettosmartorell.es/?lang=ca" />
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
+<!-- PENDIENTE: dominio definitivo -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://www.nauessentials.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
 </urlset>

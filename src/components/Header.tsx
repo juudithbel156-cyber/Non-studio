@@ -1,123 +1,91 @@
-import { useEffect, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
-import { Logo } from './Logo'
-import { IconClose, IconMenu, IconPhone } from './Icons'
-import { useI18n } from '../i18n/I18n'
-import { site } from '../config/site'
-import { scrollToTarget, stopScroll } from '../hooks/smoothScroll'
+import { useEffect, useRef, useState } from 'react'
+import { Logo } from './ui'
+import { useCart } from '../store/cart'
+import { store } from '../data/store'
+import { gsap, scrollToTarget, stopScroll } from '../hooks/smoothScroll'
 
-export const NAV = ['inicio', 'tienda', 'equipo', 'juguetes', 'marcas', 'novedades', 'servicios', 'contacto'] as const
-type Id = (typeof NAV)[number]
-
-const key: Record<Id, 'home' | 'store' | 'team' | 'toys' | 'brands' | 'news' | 'services' | 'contact'> = {
-  inicio: 'home', tienda: 'store', equipo: 'team', juguetes: 'toys', marcas: 'brands', novedades: 'news', servicios: 'services', contacto: 'contact',
-}
+export const NAV = [
+  { id: 'coleccion', label: 'The Collection' },
+  { id: 'novedades', label: 'New Arrivals' },
+  { id: 'mundo', label: 'The NAU World' },
+  { id: 'lookbook', label: 'Lookbook' },
+  { id: 'visitanos', label: 'Visit Us' },
+]
 
 export function Header() {
-  const { t, lang, setLang } = useI18n()
-  const [open, setOpen] = useState(false)
-  const [active, setActive] = useState<Id>('inicio')
-  const [solid, setSolid] = useState(false)
+  const { count, setOpen } = useCart()
+  const [menu, setMenu] = useState(false)
+  const [dark, setDark] = useState(true)
+  const panel = useRef<HTMLDivElement>(null)
 
+  // Cabecera clara sobre el hero oscuro y oscura sobre el resto
   useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id as Id)),
-      { rootMargin: '-45% 0px -50% 0px' },
-    )
-    NAV.forEach((id) => { const el = document.getElementById(id); if (el) io.observe(el) })
-    const onScroll = () => setSolid(window.scrollY > 40)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => { io.disconnect(); window.removeEventListener('scroll', onScroll) }
+    const on = () => setDark(scrollY < innerHeight * 1.6)
+    on(); addEventListener('scroll', on, { passive: true }); return () => removeEventListener('scroll', on)
   }, [])
 
-  useEffect(() => { stopScroll(open) }, [open])
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false)
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [])
+    stopScroll(menu)
+    const el = panel.current; if (!el) return
+    if (menu) {
+      gsap.set(el, { display: 'flex' })
+      gsap.fromTo(el, { clipPath: 'inset(0% 0% 100% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.9, ease: 'expo.inOut' })
+      gsap.fromTo(el.querySelectorAll('[data-i]'), { yPercent: 110 }, { yPercent: 0, duration: 1.1, stagger: 0.05, ease: 'expo.out', delay: 0.35 })
+      gsap.fromTo(el.querySelector('[data-s]'), { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 1.4, ease: 'power2.inOut', delay: 0.4 })
+    } else {
+      gsap.to(el, { clipPath: 'inset(0% 0% 100% 0%)', duration: 0.7, ease: 'expo.inOut', onComplete: () => { el.style.display = 'none' } })
+    }
+  }, [menu])
+  useEffect(() => { const k = (e: KeyboardEvent) => e.key === 'Escape' && setMenu(false); addEventListener('keydown', k); return () => removeEventListener('keydown', k) }, [])
 
-  const go = (id: Id) => { setOpen(false); scrollToTarget(id === 'inicio' ? 0 : `#${id}`) }
+  const go = (id: string) => { setMenu(false); scrollToTarget(`#${id}`) }
+  const tone = dark && !menu ? 'text-hueso' : 'text-negro'
 
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${solid ? 'bg-noche/85 shadow-[0_10px_30px_-15px_rgba(0,0,0,.5)] backdrop-blur-md' : 'bg-transparent'}`}>
-      <div className="container-j flex h-[72px] items-center justify-between gap-4">
-        <a href="#inicio" onClick={(e) => { e.preventDefault(); go('inicio') }} aria-label="Juguettos Martorell, inicio">
-          <Logo />
-        </a>
+    <>
+      <header className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${tone}`} style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}>
+        <div className="gutter wrap grid h-[72px] grid-cols-3 items-center md:h-[84px]">
+          <button onClick={() => setMenu((m) => !m)} aria-expanded={menu} aria-label={menu ? 'Cerrar menú' : 'Abrir menú'} className="group flex items-center gap-3 justify-self-start">
+            <span className="relative block h-3 w-7">
+              <span className={`absolute left-0 top-0 h-px w-full bg-current transition-transform duration-500 ${menu ? 'translate-y-1.5 rotate-45' : 'group-hover:w-5'}`} />
+              <span className={`absolute bottom-0 left-0 h-px w-full bg-current transition-transform duration-500 ${menu ? '-translate-y-1.5 -rotate-45' : ''}`} />
+            </span>
+            <span className="meta hidden sm:inline">{menu ? 'Cerrar' : 'Menú'}</span>
+          </button>
+          <a href="#top" onClick={(e) => { e.preventDefault(); setMenu(false); scrollToTarget(0) }} className="justify-self-center" aria-label="NAU essentials, inicio">
+            <Logo size={30} />
+          </a>
+          <div className="flex items-center gap-5 justify-self-end">
+            <a href={store.instagram.url} target="_blank" rel="noopener noreferrer" className="meta hidden md:inline">Instagram</a>
+            <button onClick={() => setOpen(true)} className="meta flex items-center gap-2" aria-label={`Abrir bolsa, ${count} artículos`}>
+              Bolsa <span className={`grid h-6 min-w-6 place-items-center rounded-full px-1.5 text-[11px] ${count ? 'bg-cuero text-hueso' : 'border border-current'}`}>{count}</span>
+            </button>
+          </div>
+        </div>
+      </header>
 
-        <nav aria-label="Principal" className="hidden lg:block">
-          <ul className="flex items-center gap-1">
-            {NAV.slice(1).map((id) => (
-              <li key={id}>
-                <a
-                  href={`#${id}`}
-                  onClick={(e) => { e.preventDefault(); go(id) }}
-                  aria-current={active === id ? 'true' : undefined}
-                  className="relative rounded-full px-3.5 py-2 font-display text-[.98rem] font-semibold text-white/85 transition-colors hover:text-white"
-                >
-                  {active === id && (
-                    <motion.span layoutId="nav-pill" className="absolute inset-0 -z-10 rounded-full bg-azul-claro" transition={{ type: 'spring', stiffness: 380, damping: 32 }} />
-                  )}
-                  {t.nav[key[id]]}
+      <div ref={panel} className="fixed inset-0 z-40 hidden flex-col justify-between bg-hueso pb-10 pt-28" role="dialog" aria-modal="true" aria-label="Menú">
+        <nav className="gutter wrap w-full">
+          <ul className="flex flex-col">
+            {NAV.map((n, i) => (
+              <li key={n.id} className="overflow-hidden border-b border-negro/10">
+                <a data-i href={`#${n.id}`} onClick={(e) => { e.preventDefault(); go(n.id) }} className="group flex items-baseline justify-between py-3 md:py-4">
+                  <span className="font-serif text-[clamp(2.4rem,7vw,6rem)] font-light leading-[1] tracking-[-0.04em] transition-transform duration-700 ease-[var(--ease-suelta)] group-hover:translate-x-4 group-hover:italic">{n.label}</span>
+                  <span className="meta text-piedra">{String(i + 1).padStart(2, '0')}</span>
                 </a>
               </li>
             ))}
           </ul>
         </nav>
-
-        <div className="flex items-center gap-2">
-          <div className="flex rounded-full bg-white/10 p-1 text-sm font-bold text-white" role="group" aria-label="Idioma">
-            {(['es', 'ca'] as const).map((l) => (
-              <button key={l} onClick={() => setLang(l)} aria-pressed={lang === l} className={`rounded-full px-2.5 py-1 uppercase transition-colors ${lang === l ? 'bg-white text-azul' : 'hover:bg-white/10'}`}>
-                {l}
-              </button>
-            ))}
+        <div className="gutter wrap w-full">
+          <div data-s className="stitch mb-6 text-cuero" />
+          <div className="flex flex-wrap items-center justify-between gap-4 text-[14px]">
+            <span>{store.street}, Martorell</span>
+            <a href={`tel:${store.tel}`}>{store.phone}</a>
+            <a href={store.instagram.url} target="_blank" rel="noopener noreferrer">{store.instagram.handle}</a>
           </div>
-          <a href={`tel:${site.phone.tel}`} className="grid h-11 w-11 place-items-center rounded-full bg-amarillo text-tinta transition-transform hover:scale-105" aria-label={`${t.call} ${site.phone.display}`}>
-            <IconPhone size={20} />
-          </a>
-          <button onClick={() => setOpen(true)} className="grid h-11 w-11 place-items-center rounded-full bg-white/10 text-white lg:hidden" aria-label={t.menu} aria-expanded={open}>
-            <IconMenu />
-          </button>
         </div>
       </div>
-
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            className="fixed inset-0 z-50 bg-noche/97 lg:hidden"
-            initial={{ clipPath: 'circle(0% at 92% 36px)' }}
-            animate={{ clipPath: 'circle(150% at 92% 36px)' }}
-            exit={{ clipPath: 'circle(0% at 92% 36px)' }}
-            transition={{ duration: 0.55, ease: [0.7, 0, 0.2, 1] }}
-            role="dialog"
-            aria-modal="true"
-            aria-label={t.menu}
-          >
-            <div className="container-j flex h-[72px] items-center justify-between">
-              <Logo />
-              <button onClick={() => setOpen(false)} className="grid h-11 w-11 place-items-center rounded-full bg-white/10 text-white" aria-label={t.close}>
-                <IconClose />
-              </button>
-            </div>
-            <ul className="container-j mt-6 flex flex-col gap-1">
-              {NAV.map((id, i) => (
-                <motion.li key={id} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 + i * 0.04 }}>
-                  <a
-                    href={`#${id}`}
-                    onClick={(e) => { e.preventDefault(); go(id) }}
-                    className={`block rounded-2xl px-4 py-3 font-display text-3xl font-bold ${active === id ? 'bg-azul-claro text-white' : 'text-white/85'}`}
-                  >
-                    {t.nav[key[id]]}
-                  </a>
-                </motion.li>
-              ))}
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
+    </>
   )
 }

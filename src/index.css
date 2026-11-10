@@ -1,84 +1,70 @@
 @import "tailwindcss";
 
 /*
- * TOKENS DE MARCA
- * Los valores de azul, rojo y amarillo son aproximaciones a la identidad de Juguettos.
- * PENDIENTE: sustituir por los valores exactos del manual de marca oficial.
+ * NAU ESSENTIALS — "A different way to feel fashion"
+ * Concepto: la etiqueta de cuero cosida de NAU como sistema. Puntadas (líneas de puntos)
+ * enmarcan, separan y señalan; el lino flota en 3D; el coñac del cuero es el único acento.
+ * Colores medidos de la foto de perfil de @nauessentials (etiqueta, mimbre, olivo) + paleta del brief.
  */
 @theme {
-  --color-azul: #1B3D9A;
-  --color-azul-claro: #2F5BD3;
-  --color-noche: #10296F;
-  --color-rojo: #E52421;
-  --color-amarillo: #FFCC00;
-  --color-nube: #EEF2FF;
-  --color-tinta: #17204A;
-  --color-gris: #5A6488;
+  --color-hueso: #EFECE6;      /* blanco roto, ligeramente piedra (no crema) */
+  --color-lino: #E3DBCD;       /* lino crudo */
+  --color-arena: #CDBFA8;      /* beige arena */
+  --color-piedra: #8A857C;     /* gris piedra */
+  --color-negro: #0E0D0B;      /* negro profundo */
+  --color-cuero: #9A4A12;      /* etiqueta de cuero NAU */
+  --color-olivo: #4F5A3F;      /* rama de olivo */
 
-  --font-display: "Baloo 2", "Nunito", ui-rounded, system-ui, sans-serif;
-  --font-sans: "Nunito", ui-rounded, system-ui, sans-serif;
+  --font-serif: "Fraunces", "Times New Roman", serif;
+  --font-sans: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-marca: "Quicksand", "Hanken Grotesk", sans-serif;
 
-  --ease-juego: cubic-bezier(.2, .9, .25, 1.15);
+  --ease-tela: cubic-bezier(.65, 0, .35, 1);
+  --ease-suelta: cubic-bezier(.16, 1, .3, 1);
 }
 
 @layer base {
-  html { -webkit-text-size-adjust: 100%; }
   html.lenis, html.lenis body { height: auto; }
   .lenis.lenis-smooth { scroll-behavior: auto !important; }
   .lenis.lenis-stopped { overflow: hidden; }
-
-  body {
-    @apply bg-white font-sans text-tinta antialiased;
-    font-feature-settings: "kern";
-  }
-  h1, h2, h3, h4 { @apply font-display; letter-spacing: -0.01em; }
-  ::selection { background: var(--color-amarillo); color: var(--color-tinta); }
-
-  :focus-visible {
-    outline: 3px solid var(--color-amarillo);
-    outline-offset: 3px;
-    border-radius: 10px;
-  }
+  body { @apply bg-hueso font-sans text-negro antialiased; font-feature-settings: "ss01"; }
+  h1, h2, h3 { @apply font-serif font-light; font-variation-settings: "SOFT" 100, "WONK" 0; letter-spacing: -0.035em; text-wrap: balance; }
+  ::selection { background: var(--color-cuero); color: var(--color-hueso); }
+  :focus-visible { outline: 1.5px dashed var(--color-cuero); outline-offset: 4px; }
+  @media (hover: hover) and (pointer: fine) { .has-cursor, .has-cursor a, .has-cursor button, .has-cursor label { cursor: none; } }
 }
 
 @layer components {
-  .container-j { @apply mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-10; }
+  .gutter { padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+  @media (min-width: 768px) { .gutter { padding-left: 40px; padding-right: 40px; } }
+  @media (min-width: 1280px) { .gutter { padding-left: 64px; padding-right: 64px; } }
+  .wrap { @apply mx-auto w-full max-w-[1600px]; }
 
-  .btn {
-    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 font-display text-[1.05rem] font-bold leading-none transition-[transform,box-shadow,background-color] duration-300 active:scale-[.97];
-    transition-timing-function: var(--ease-juego);
-  }
-  .btn-sol { @apply bg-amarillo text-tinta shadow-[0_6px_0_#C99A00,0_14px_30px_-8px_rgba(255,204,0,.55)] hover:-translate-y-0.5 hover:shadow-[0_8px_0_#C99A00,0_18px_36px_-8px_rgba(255,204,0,.6)]; }
-  .btn-azul { @apply bg-azul text-white shadow-[0_6px_0_#0E2566] hover:-translate-y-0.5 hover:bg-azul-claro; }
-  .btn-claro { @apply bg-white text-azul ring-2 ring-azul/15 hover:ring-azul/40; }
+  /* Puntada: la costura de la etiqueta NAU como recurso gráfico */
+  .stitch { background-image: radial-gradient(circle, currentColor 1.1px, transparent 1.4px); background-size: 9px 3px; background-repeat: repeat-x; background-position: left center; height: 3px; }
+  .stitch-v { background-image: radial-gradient(circle, currentColor 1.1px, transparent 1.4px); background-size: 3px 9px; background-repeat: repeat-y; width: 3px; }
+  .stitch-box { position: relative; }
+  .stitch-box::after { content: ""; position: absolute; inset: 8px; border: 1.5px dotted currentColor; border-radius: inherit; pointer-events: none; opacity: .55; }
 
-  /* Hueco provisional: siempre visible y fácil de localizar */
-  .pendiente {
-    @apply inline-flex items-center gap-1.5 rounded-full bg-amarillo/90 px-2.5 py-1 text-[.72rem] font-extrabold text-tinta;
-  }
-  .slot {
-    background:
-      repeating-linear-gradient(135deg, rgb(27 61 154 / .06) 0 12px, transparent 12px 24px),
-      linear-gradient(160deg, #F4F6FF, #E3E9FF);
-    @apply border-2 border-dashed border-azul/25;
-  }
+  .btn { @apply relative inline-flex h-13 items-center justify-center gap-3 overflow-hidden rounded-full px-7 text-[14px] font-medium tracking-[0.01em] transition-colors duration-500; }
+  .btn-cuero { @apply bg-cuero text-hueso hover:bg-negro; }
+  .btn-negro { @apply bg-negro text-hueso hover:bg-cuero; }
+  .btn-claro { @apply bg-hueso text-negro hover:bg-lino; }
+  .btn-linea { @apply border border-current hover:bg-negro hover:text-hueso; }
 
-  .h-section { @apply font-display text-[clamp(2rem,4.6vw,3.6rem)] font-extrabold leading-[1.02]; }
-  .lead { @apply max-w-[58ch] text-[1.075rem] leading-relaxed text-gris; }
+  .display { @apply font-serif font-light leading-[0.88]; font-size: clamp(3.4rem, 10vw, 12.5rem); }
+  .h-xl { @apply font-serif font-light leading-[0.95]; font-size: clamp(2.6rem, 6.4vw, 7.4rem); }
+  .h-lg { @apply font-serif font-light leading-[1]; font-size: clamp(2rem, 3.8vw, 4.2rem); }
+  .lead { @apply max-w-[48ch] text-[16px] leading-[1.7] md:text-[17px]; }
+  .meta { @apply text-[12px] font-medium tracking-[0.02em]; }
+  .demo { @apply inline-flex items-center rounded-full bg-cuero/90 px-2.5 py-1 text-[10.5px] font-semibold text-hueso; }
 }
 
-@keyframes rueda {
-  0% { transform: translateY(0); opacity: 1 }
-  70% { transform: translateY(10px); opacity: 0 }
-  100% { transform: translateY(0); opacity: 0 }
+.grano::after {
+  content: ""; position: absolute; inset: -50%; pointer-events: none; opacity: .08; z-index: 3;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
-.animate-rueda { animation: rueda 1.8s ease-in-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+  *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
 }
-
-/* Patrón de juguetes para fondos de sección */
-.patron-claro { background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22220%22%20height%3D%22220%22%20viewBox%3D%220%200%20220%20220%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%231B3D9A%22%20stroke-opacity%3D%220.09%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m40%2022%207%2015%2016%202-12%2011%203%2016-14-8-14%208%203-16-12-11%2016-2Z%22/%3E%3Ccircle%20cx%3D%22160%22%20cy%3D%2244%22%20r%3D%2216%22/%3E%3Cpath%20d%3D%22M146%2044h28M160%2030v28%22%20stroke-opacity%3D%220.054%22/%3E%3Crect%20x%3D%22120%22%20y%3D%22140%22%20width%3D%2252%22%20height%3D%2226%22%20rx%3D%225%22/%3E%3Cpath%20d%3D%22M130%20140v-8M150%20140v-8%22/%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%22160%22%20r%3D%2220%22/%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%22160%22%20r%3D%228%22/%3E%3Cpath%20d%3D%22M90%2096c8-10%2022-10%2030%200%22%20/%3E%3C/g%3E%3C/svg%3E"); background-size: 220px; }
-.patron-oscuro { background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22220%22%20height%3D%22220%22%20viewBox%3D%220%200%20220%20220%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23FFFFFF%22%20stroke-opacity%3D%220.08%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m40%2022%207%2015%2016%202-12%2011%203%2016-14-8-14%208%203-16-12-11%2016-2Z%22/%3E%3Ccircle%20cx%3D%22160%22%20cy%3D%2244%22%20r%3D%2216%22/%3E%3Cpath%20d%3D%22M146%2044h28M160%2030v28%22%20stroke-opacity%3D%220.048%22/%3E%3Crect%20x%3D%22120%22%20y%3D%22140%22%20width%3D%2252%22%20height%3D%2226%22%20rx%3D%225%22/%3E%3Cpath%20d%3D%22M130%20140v-8M150%20140v-8%22/%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%22160%22%20r%3D%2220%22/%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%22160%22%20r%3D%228%22/%3E%3Cpath%20d%3D%22M90%2096c8-10%2022-10%2030%200%22%20/%3E%3C/g%3E%3C/svg%3E"); background-size: 220px; }
-.patron-calido { background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22220%22%20height%3D%22220%22%20viewBox%3D%220%200%20220%20220%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23B45309%22%20stroke-opacity%3D%220.1%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m40%2022%207%2015%2016%202-12%2011%203%2016-14-8-14%208%203-16-12-11%2016-2Z%22/%3E%3Ccircle%20cx%3D%22160%22%20cy%3D%2244%22%20r%3D%2216%22/%3E%3Cpath%20d%3D%22M146%2044h28M160%2030v28%22%20stroke-opacity%3D%220.06%22/%3E%3Crect%20x%3D%22120%22%20y%3D%22140%22%20width%3D%2252%22%20height%3D%2226%22%20rx%3D%225%22/%3E%3Cpath%20d%3D%22M130%20140v-8M150%20140v-8%22/%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%22160%22%20r%3D%2220%22/%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%22160%22%20r%3D%228%22/%3E%3Cpath%20d%3D%22M90%2096c8-10%2022-10%2030%200%22%20/%3E%3C/g%3E%3C/svg%3E"); background-size: 220px; }

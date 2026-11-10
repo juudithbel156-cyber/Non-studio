@@ -1,5 +1,3 @@
 User-agent: *
 Allow: /
-
-# PENDIENTE: sustituir por el dominio definitivo
-Sitemap: https://www.juguettosmartorell.es/sitemap.xml
+Sitemap: https://www.nauessentials.com/sitemap.xml

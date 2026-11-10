@@ -22,7 +22,7 @@ export function initSmoothScroll(reduced: boolean) {
 
 /** Desplazamiento suave a un ancla (#id) o a un número de píxeles. */
 export function scrollToTarget(target: string | number) {
-  const offset = -72
+  const offset = -20
   if (lenis) {
     lenis.scrollTo(target as string, { offset: typeof target === 'number' ? 0 : offset, duration: 1.4 })
     return
@@ -41,3 +41,8 @@ export function stopScroll(stop: boolean) {
 }
 
 export { gsap, ScrollTrigger }
+
+export function scrollTopNow() {
+  if (lenis) lenis.scrollTo(0, { immediate: true })
+  else window.scrollTo(0, 0)
+}
