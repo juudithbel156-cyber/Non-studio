@@ -4,7 +4,7 @@
  * NAU ESSENTIALS — "A different way to feel fashion"
  * Concepto: la etiqueta de cuero cosida de NAU como sistema. Puntadas (líneas de puntos)
  * enmarcan, separan y señalan; el lino flota en 3D; el coñac del cuero es el único acento.
- * Colores medidos de la foto de perfil de @nauessentials (etiqueta, mimbre, olivo) + paleta del brief.
+ * Colores medidos de la foto de perfil (etiqueta de cuero) y de la fachada (rótulo musgo, escaparate lima).
  */
 @theme {
   --color-hueso: #EFECE6;      /* blanco roto, ligeramente piedra (no crema) */
@@ -14,6 +14,8 @@
   --color-negro: #0E0D0B;      /* negro profundo */
   --color-cuero: #9A4A12;      /* etiqueta de cuero NAU */
   --color-olivo: #4F5A3F;      /* rama de olivo */
+  --color-musgo: #5A6C1E;      /* letras del rótulo "nau" de la fachada */
+  --color-lima: #C6E46C;       /* marco del escaparate */
 
   --font-serif: "Fraunces", "Times New Roman", serif;
   --font-sans: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
@@ -29,7 +31,7 @@
   .lenis.lenis-stopped { overflow: hidden; }
   body { @apply bg-hueso font-sans text-negro antialiased; font-feature-settings: "ss01"; }
   h1, h2, h3 { @apply font-serif font-light; font-variation-settings: "SOFT" 100, "WONK" 0; letter-spacing: -0.035em; text-wrap: balance; }
-  ::selection { background: var(--color-cuero); color: var(--color-hueso); }
+  ::selection { background: var(--color-lima); color: var(--color-negro); }
   :focus-visible { outline: 1.5px dashed var(--color-cuero); outline-offset: 4px; }
   @media (hover: hover) and (pointer: fine) { .has-cursor, .has-cursor a, .has-cursor button, .has-cursor label { cursor: none; } }
 }

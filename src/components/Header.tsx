@@ -18,9 +18,13 @@ export function Header() {
   const [dark, setDark] = useState(true)
   const panel = useRef<HTMLDivElement>(null)
 
-  // Cabecera clara sobre el hero oscuro y oscura sobre el resto
+  // La cabecera se aclara sobre cualquier sección marcada como oscura (data-dark)
   useEffect(() => {
-    const on = () => setDark(scrollY < innerHeight * 1.6)
+    const on = () => {
+      const y = 42
+      const hit = [...document.querySelectorAll<HTMLElement>('[data-dark]')].some((el) => { const r = el.getBoundingClientRect(); return r.top <= y && r.bottom >= y })
+      setDark(hit)
+    }
     on(); addEventListener('scroll', on, { passive: true }); return () => removeEventListener('scroll', on)
   }, [])
 
@@ -53,12 +57,12 @@ export function Header() {
             <span className="meta hidden sm:inline">{menu ? 'Cerrar' : 'Menú'}</span>
           </button>
           <a href="#top" onClick={(e) => { e.preventDefault(); setMenu(false); scrollToTarget(0) }} className="justify-self-center" aria-label="NAU essentials, inicio">
-            <Logo size={30} />
+            <Logo size={30} className={dark && !menu ? '' : 'text-musgo'} />
           </a>
           <div className="flex items-center gap-5 justify-self-end">
             <a href={store.instagram.url} target="_blank" rel="noopener noreferrer" className="meta hidden md:inline">Instagram</a>
             <button onClick={() => setOpen(true)} className="meta flex items-center gap-2" aria-label={`Abrir bolsa, ${count} artículos`}>
-              Bolsa <span className={`grid h-6 min-w-6 place-items-center rounded-full px-1.5 text-[11px] ${count ? 'bg-cuero text-hueso' : 'border border-current'}`}>{count}</span>
+              Bolsa <span className={`grid h-6 min-w-6 place-items-center rounded-full px-1.5 text-[11px] ${count ? 'bg-lima text-negro' : 'border border-current'}`}>{count}</span>
             </button>
           </div>
         </div>

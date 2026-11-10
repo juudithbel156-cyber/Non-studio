@@ -22,7 +22,7 @@ export function Footer() {
   }, [])
   useEffect(() => { stopScroll(!!doc) }, [doc])
   return (
-    <footer ref={ref} className="relative overflow-hidden bg-cuero text-hueso">
+    <footer ref={ref} data-dark className="relative overflow-hidden bg-musgo text-hueso">
       <div className="gutter wrap grid gap-12 pb-10 pt-20 md:grid-cols-12">
         <div className="md:col-span-4">
           <Logo size={44} />
@@ -40,7 +40,7 @@ export function Footer() {
         </address>
       </div>
       <div data-bigrow className="gutter wrap flex overflow-hidden" aria-hidden>
-        <p className="font-marca font-semibold leading-[0.78] tracking-[-0.05em]" style={{ fontSize: 'clamp(8rem, 34vw, 38rem)' }}>
+        <p className="font-marca font-semibold leading-[0.78] tracking-[-0.05em] text-lima" style={{ fontSize: 'clamp(8rem, 34vw, 38rem)' }}>
           {['n', 'a', 'u'].map((c, i) => <span key={i} data-big className="inline-block">{c}</span>)}
         </p>
       </div>

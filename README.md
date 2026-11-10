@@ -16,7 +16,7 @@ npm run build    # producción en /dist (hosting estático: Netlify, Vercel, Clo
 
 **"Pensat per a tu"**, el lema de su etiqueta de cuero cosida, es el centro del sistema:
 - **La puntada** (líneas de puntos) enmarca, separa y se "cose" al aparecer.
-- **Colores medidos** de la foto de perfil de Instagram: cuero `#9A4A12` (único acento), olivo `#4F5A3F`, lino, arena, piedra, hueso y negro profundo.
+- **Colores medidos** de la marca: verde musgo `#5A6C1E` (rótulo "nau" de la fachada, logotipo y footer), lima `#C6E46C` (escaparate, acento puntual), cuero `#9A4A12` (etiqueta y puntadas), más lino, arena, piedra, hueso y negro.
 - **Tipografías:** Fraunces (serif editorial, cursiva en titulares), Hanken Grotesk (texto) y Quicksand para "nau", redondeada como su logotipo en minúsculas.
 - **3D (React Three Fiber):** lienzos de lino que ondean y reaccionan al ratón, la etiqueta NAU balanceándose como un péndulo y la sombra de una rama de olivo; la cámara atraviesa las telas al hacer scroll.
 

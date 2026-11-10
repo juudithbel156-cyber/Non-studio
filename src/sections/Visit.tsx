@@ -8,7 +8,7 @@ export function Visit() {
     <section id="visitanos" aria-labelledby="visit-title" className="relative bg-hueso py-28 md:py-40">
       <div className="gutter wrap grid gap-12 md:grid-cols-12">
         <div className="md:col-span-5">
-          <p className="meta text-cuero">Visit Us</p>
+          <p className="meta text-musgo">Visit Us</p>
           <MaskText as="h2" text="Ven a probártelo." className="h-xl mt-5" />
           <Stitch className="mt-10 max-w-[260px] text-cuero" />
           <address className="mt-10 text-[20px] not-italic leading-relaxed">{store.street}<br />{store.city}</address>

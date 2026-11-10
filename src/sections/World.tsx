@@ -20,10 +20,10 @@ export function World() {
     return () => ctx.revert()
   }, [])
   return (
-    <section id="mundo" ref={root} aria-labelledby="world-title" className="relative overflow-hidden bg-negro py-28 text-hueso md:py-44">
+    <section id="mundo" data-dark ref={root} aria-labelledby="world-title" className="relative overflow-hidden bg-negro py-28 text-hueso md:py-44">
       <div className="gutter wrap grid gap-16 md:grid-cols-12">
         <div className="md:col-span-7">
-          <h2 id="world-title" className="meta text-arena">The NAU World</h2>
+          <h2 id="world-title" className="meta text-lima">The NAU World</h2>
           <p data-phrase className="mt-10 font-serif text-[clamp(2.2rem,4.4vw,4.8rem)] font-light leading-[1.05] tracking-[-0.035em]">
             {LINE.split(' ').map((w, i) => <span key={i} data-w>{w} </span>)}
           </p>

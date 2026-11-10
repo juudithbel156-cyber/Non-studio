@@ -32,7 +32,7 @@ export function Hero({ ready }: { ready: boolean }) {
   }, [ready, reduced])
 
   return (
-    <section id="top" ref={root} aria-labelledby="hero-title" className={`relative bg-negro ${reduced ? '' : 'h-[220svh]'}`}>
+    <section id="top" data-dark ref={root} aria-labelledby="hero-title" className={`relative bg-negro ${reduced ? '' : 'h-[220svh]'}`}>
       <div className="grano sticky top-0 h-[100svh] min-h-[600px] overflow-hidden">
         <div className="absolute inset-0">
           {hasWebGL() ? (
