@@ -42,9 +42,7 @@ export function World() {
           </div>
         </div>
         <div className="relative md:col-span-4 md:col-start-9">
-          <Photo src={IMG.cesta} alt="Cesta de mimbre con lino" className="aspect-[3/4] w-full" speed={0.08}>
-            <span className="demo absolute left-3 top-3">Imagen provisional</span>
-          </Photo>
+          <Photo src={IMG['ig-look-2']} alt="Probando un vaquero en la tienda NAU" className="aspect-[3/4] w-full" speed={0.08} />
           <div data-tagimg className="absolute -bottom-10 -left-10 w-[62%] shadow-[0_40px_80px_-30px_rgba(0,0,0,.8)] md:-left-24">
             <img src={IMG.etiqueta} alt="Etiqueta de cuero NAU, Pensat per a tu" loading="lazy" className="aspect-[4/3] w-full object-cover" />
           </div>

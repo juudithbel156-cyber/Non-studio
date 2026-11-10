@@ -33,7 +33,7 @@ npm run build    # producción en /dist (hosting estático: Netlify, Vercel, Clo
 
 ## Pendiente antes de publicar
 
-1. **Fotografías reales.** Todas las imágenes son renders provisionales de materiales (marcados en la web). Sustituir los archivos de `src/assets/img/` manteniendo los nombres.
+1. **Fotografías:** portada, colecciones, lookbook, Instagram y fachada usan 6 publicaciones reales de @nauessentials (`src/assets/img/ig-*.webp`). Las fichas de producto siguen con renders de demostración hasta tener fotos de cada prenda.
 2. **Catálogo real.** Reemplazar los productos de `catalog.ts` (nombre, precio, tallas, descripción, imagen) y quitar `demo: true`.
 3. **Horario** en `store.ts`.
 4. **Textos legales** (privacidad, aviso legal, cookies) redactados por el responsable legal.

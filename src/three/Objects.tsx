@@ -1,5 +1,5 @@
 import { useMemo, useRef } from 'react'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 
 /* ------------------------------------------------------------------ */
@@ -283,5 +283,35 @@ export function Drape({ color = '#E6DED0', seed = 1, size = 9, depth = 0.085, ..
     <mesh geometry={geo} castShadow receiveShadow {...p}>
       <meshPhysicalMaterial color={color} map={tex} bumpMap={tex} bumpScale={0.9} roughness={0.93} sheen={1} sheenRoughness={0.55} sheenColor="#fff6e8" side={THREE.DoubleSide} />
     </mesh>
+  )
+}
+
+/** Fotografía real colgada como un lienzo, con pinzas, que se balancea con el ratón. */
+export function HangingPhoto({ src, height = 3.6, ...p }: { src: string; height?: number } & JSX.IntrinsicElements['group']) {
+  const tex = useLoader(THREE.TextureLoader, src)
+  tex.colorSpace = THREE.SRGBColorSpace
+  const ratio = tex.image.width / tex.image.height
+  const g = useRef<THREE.Group>(null!)
+  useFrame((s, dt) => {
+    const t = s.clock.elapsedTime
+    g.current.rotation.y = THREE.MathUtils.damp(g.current.rotation.y, s.pointer.x * 0.25 + Math.sin(t * 0.6) * 0.05, 2.5, dt)
+    g.current.rotation.x = THREE.MathUtils.damp(g.current.rotation.x, -s.pointer.y * 0.06, 2.5, dt)
+  })
+  const w = height * ratio
+  return (
+    <group {...p}>
+      <group ref={g}>
+        <mesh position={[0, -height / 2, 0]} castShadow>
+          <planeGeometry args={[w, height]} />
+          <meshStandardMaterial map={tex} roughness={0.7} side={THREE.DoubleSide} />
+        </mesh>
+        {[-w * 0.32, w * 0.32].map((x) => (
+          <mesh key={x} position={[x, 0.02, 0.03]} castShadow>
+            <boxGeometry args={[0.08, 0.28, 0.06]} />
+            <meshStandardMaterial color="#B9875A" roughness={0.8} />
+          </mesh>
+        ))}
+      </group>
+    </group>
   )
 }

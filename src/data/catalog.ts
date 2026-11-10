@@ -42,13 +42,14 @@ export const products: Product[] = [
 
 /** Colecciones (demostración). */
 export const collections = [
-  { id: 'lino', title: 'Lino', line: 'Tejidos que respiran, cortes que no aprietan.', image: 'lino', products: ['demo-01', 'demo-04', 'demo-06'] },
-  { id: 'punto', title: 'Punto y ganchillo', line: 'Texturas hechas a mano para las tardes largas.', image: 'ganchillo', products: ['demo-03', 'demo-05'] },
-  { id: 'esenciales', title: 'Esenciales', line: 'Las piezas a las que siempre vuelves.', image: 'negro', products: ['demo-02', 'demo-04'] },
-  { id: 'complementos', title: 'Complementos', line: 'Mimbre, paja y cuero para terminar el look.', image: 'cesta', products: ['demo-07', 'demo-08'] },
+  { id: 'lino', title: 'Lino', line: 'Tejidos que respiran, cortes que no aprietan.', image: 'ig-look-3', products: ['demo-01', 'demo-04', 'demo-06'] },
+  { id: 'punto', title: 'Punto y ganchillo', line: 'Texturas hechas a mano para las tardes largas.', image: 'ig-look-4', products: ['demo-03', 'demo-05'] },
+  { id: 'esenciales', title: 'Esenciales', line: 'Las piezas a las que siempre vuelves.', image: 'ig-look-1', products: ['demo-02', 'demo-04'] },
+  { id: 'complementos', title: 'Complementos', line: 'Calzado y complementos para terminar el look.', image: 'ig-botas', products: ['demo-07', 'demo-08'] },
 ]
 
+/** Lookbook con publicaciones reales de @nauessentials. */
 export const lookbook = [
-  { image: 'lino', ratio: 'v' }, { image: 'etiqueta', ratio: 'h' }, { image: 'ganchillo', ratio: 'v' },
-  { image: 'sombrero', ratio: 'v' }, { image: 'negro', ratio: 'h' }, { image: 'cesta', ratio: 'v' },
+  { image: 'ig-look-3', ratio: 'v' }, { image: 'ig-botas', ratio: 'v' }, { image: 'ig-look-1', ratio: 'v' },
+  { image: 'ig-look-4', ratio: 'v' }, { image: 'ig-look-2', ratio: 'v' }, { image: 'etiqueta', ratio: 'v' },
 ] as const

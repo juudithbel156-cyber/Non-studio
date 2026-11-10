@@ -36,10 +36,10 @@ export function Hero({ ready }: { ready: boolean }) {
       <div className="grano sticky top-0 h-[100svh] min-h-[600px] overflow-hidden">
         <div className="absolute inset-0">
           {hasWebGL() ? (
-            <Suspense fallback={<img src={IMG.lino} alt="" className="h-full w-full object-cover" />}>
-              <HeroScene progress={progress} mobile={mobile} reduced={reduced} active={visible} />
+            <Suspense fallback={<img src={IMG['ig-look-3']} alt="" className="h-full w-full object-cover" />}>
+              <HeroScene progress={progress} mobile={mobile} reduced={reduced} active={visible} photo={IMG['ig-look-3']} />
             </Suspense>
-          ) : <img src={IMG.lino} alt="" className="h-full w-full object-cover" />}
+          ) : <img src={IMG['ig-look-3']} alt="" className="h-full w-full object-cover" />}
         </div>
         <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-negro/45 via-transparent to-negro/55" />
 

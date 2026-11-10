@@ -44,8 +44,7 @@ export function Collection({ onPick }: { onPick: (cat: string) => void }) {
             <article key={c.id} data-panel className={`gutter relative shrink-0 md:flex md:h-full md:w-[78vw] md:items-center md:gap-10 md:px-[4vw] lg:w-[64vw] ${i % 2 ? 'md:flex-row-reverse' : ''}`}>
               <a href="#novedades" onClick={(e) => { e.preventDefault(); onPick(c.id); scrollToTarget('#novedades') }} data-cursor="Ver" className="relative block aspect-[4/5] w-full overflow-hidden md:h-[76svh] md:w-auto md:max-w-[50%]">
                 <img src={IMG[c.image]} alt={`Colección ${c.title}`} loading="lazy" className="h-full w-full object-cover transition-transform duration-[1.4s] ease-[var(--ease-suelta)] hover:scale-[1.04]" />
-                <span className="demo absolute left-3 top-3">Imagen provisional</span>
-              </a>
+                              </a>
               <div className="mt-6 md:mt-0 md:flex-1">
                 <p className="meta text-piedra">Capítulo {i + 1} de {collections.length}</p>
                 <h3 className="mt-3 overflow-hidden pb-[0.14em] font-serif text-[clamp(2.6rem,5.6vw,6.6rem)] font-light italic leading-[0.95] tracking-[-0.04em]"><span data-t className="block">{c.title}</span></h3>
